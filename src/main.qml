@@ -38,7 +38,7 @@ Window {
     Player{
         id: playerArea
         x:40
-        y:410
+        y:375
     }
 
 

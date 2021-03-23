@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Rectangle {
     id: bullet
-    width: 10
+    width: 20
     height: 10
     color: "black"
     NumberAnimation on x {
@@ -11,6 +11,11 @@ Rectangle {
         duration: 700
         running: true
     }
+
+    Image {
+        source: "qrc:/Cowboy/bullet/bullet.png"
+    }
+
     onXChanged: {
         if (x > 640){
             destroy()
