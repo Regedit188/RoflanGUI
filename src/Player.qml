@@ -28,8 +28,8 @@ Rectangle {
         onClicked: point.focus=true;
     }
     function bla(){
-        if (root.y > 410){
-            root.y = 410
+        if (root.y > 375){
+            root.y = 375
         }
         else if (root.y < 350){
             root.y = 350
