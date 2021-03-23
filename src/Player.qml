@@ -13,8 +13,12 @@ Rectangle {
     color: "blue"
     opacity: 0.8
 
+    property var runFrame: 0;
+
     Image {
+        id: playerTexture
         source: "qrc:/Cowboy/stand/stand.png"
+        mirror: false
     }
 
     MouseArea {
@@ -27,6 +31,7 @@ Rectangle {
         }
         onClicked: point.focus=true;
     }
+
     function bla(){
         if (root.y > 375){
             root.y = 375
@@ -35,24 +40,45 @@ Rectangle {
             root.y = 350
         }
     }
+
+    function changeRunRightFrame()
+    {
+        if(runFrame == 0)
+        {
+            playerTexture.source = "qrc:/Cowboy/walk/walk1.png";
+            runFrame = 1;
+        }
+        else
+        {
+            playerTexture.source = "qrc:/Cowboy/walk/walk2.png";
+            runFrame = 0;
+        }
+    }
+
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
-            root.x-=5;
+            playerTexture.mirror = true;
+            changeRunRightFrame();
+            root.x-=5;            
             dragged();
             break;
         case Qt.Key_Right:
+            playerTexture.mirror = false;
+            changeRunRightFrame();
             root.x+=5;
             dragged();
             break;
         case Qt.Key_Up:
             root.y-=5;
             bla();
+            playerTexture.source = "qrc:/Cowboy/jump/jump.png";
             dragged();
             break;
         case Qt.Key_Down:
             root.y+=5;
             bla();
+            playerTexture.source = "qrc:/Cowboy/stand/stand.png";
             dragged();
             break;
         }
