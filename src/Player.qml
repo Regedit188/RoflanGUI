@@ -13,12 +13,42 @@ Rectangle {
     color: "blue"
     opacity: 0.8
 
+    property var yPMin: 250;
+    property var yPMax: 375;
     property var runFrame: 0;
+    property var jumping: false;
 
     Image {
         id: playerTexture
         source: "qrc:/Cowboy/stand/stand.png"
         mirror: false
+    }
+
+    Timer{
+        id: jump_timer
+        interval: 100
+        running: false
+        repeat: true
+
+        property var yPMaxT: 375;
+        property var yVelocity: 50;
+        property var yAcceleration: 0;
+        property var g: -9.8;
+
+        onTriggered: {
+            if(root.y == yPMaxT)//on ground
+            {
+                yVelocity = 50;
+                yAcceleration = g;
+            }
+            root.y -= yVelocity + 0.5*yAcceleration;
+            yVelocity += yAcceleration;
+            if(root.y > yPMaxT)
+            {
+                root.y  = yPMaxT;
+                running = false;
+            }
+        }
     }
 
     MouseArea {
@@ -33,11 +63,11 @@ Rectangle {
     }
 
     function bla(){
-        if (root.y > 375){
-            root.y = 375
+        if (root.y > yPMax){
+            root.y = yPMax
         }
-        else if (root.y < 350){
-            root.y = 350
+        else if (root.y < yPMin){
+            root.y = yPMin
         }
     }
 
@@ -55,6 +85,24 @@ Rectangle {
         }
     }
 
+    function playerJump()
+    {
+        if(!jumping)
+        {
+            jumping = true;
+            jump_timer.running = true;
+            playerTexture.source = "qrc:/Cowboy/jump/jump.png";
+
+        }
+        if(jump_timer.running == false)
+        {
+            jumping = false;
+            playerTexture.source = "qrc:/Cowboy/stand/stand.png";
+            root.y = yPMax;
+        }
+
+    }
+
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
@@ -70,15 +118,14 @@ Rectangle {
             dragged();
             break;
         case Qt.Key_Up:
-            root.y-=5;
+            playerJump();
+            //root.y-=5;
             bla();
-            playerTexture.source = "qrc:/Cowboy/jump/jump.png";
             dragged();
             break;
         case Qt.Key_Down:
             root.y+=5;
             bla();
-            playerTexture.source = "qrc:/Cowboy/stand/stand.png";
             dragged();
             break;
         }
