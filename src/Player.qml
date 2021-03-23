@@ -13,6 +13,10 @@ Rectangle {
     color: "blue"
     opacity: 0.8
 
+    Image {
+        source: "qrc:/Cowboy/stand/stand.png"
+    }
+
     MouseArea {
         anchors.fill: parent
         drag.target: root

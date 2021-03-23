@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    textures.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -27,3 +28,15 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/Tileset.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/bullet/bullet.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/jump/jump.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/jump/Фон.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/knife/knife1.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/knife/knife2.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/lose/Фон.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/stand/stand.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/walk/walk1.png \
+    C:/Users/user/Documents/Cowboys vs Aliens/source/Cowboy/walk/walk2.png
