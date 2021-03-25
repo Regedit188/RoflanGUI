@@ -8,6 +8,15 @@ Window {
     width: 640
     height: 480
     title: qsTr("Cowboys against the aliens")
+
+    Image {
+        id: backgroundTexture
+        source: "qrc:/textures/background/4/background.png"
+        mirror: false
+        width: 640
+        height: 480
+    }
+
     Timer{
         id: enemy_timer
         interval: 1300
@@ -16,7 +25,7 @@ Window {
         onTriggered: {
             var component = Qt.createComponent("Enemy.qml")
             if (component.status === Component.Ready){
-                var e = component.createObject(root, {"x":510, "y":380})
+                var e = component.createObject(root, {"x":510, "y":350})
                 enemyList.push(e)
             }
         }
