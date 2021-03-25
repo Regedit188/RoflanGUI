@@ -8,8 +8,8 @@ property alias color :point.color
 Rectangle {
     id:point
     anchors.centerIn: parent
-    width: 60
-    height: 60
+    width: 68
+    height: 92
     color: "blue"
     opacity: 0.8
 
@@ -17,6 +17,10 @@ Rectangle {
     property var yPMax: 375;
     property var runFrame: 0;
     property var jumping: false;
+    property var runningRight: false;
+    property var runningLeft: false;
+    property var componentBullet: Qt.createComponent("Bullet.qml");
+
 
     Image {
         id: playerTexture
@@ -26,7 +30,7 @@ Rectangle {
 
     Timer{
         id: jump_timer
-        interval: 100
+        interval: 10
         running: false
         repeat: true
 
@@ -34,15 +38,28 @@ Rectangle {
         property var yVelocity: 50;
         property var yAcceleration: 0;
         property var g: -9.8;
+        property var dt: interval/100;
 
         onTriggered: {
+            if(point.runningRight == true)
+            {
+                root.x += 10;
+                point.runningRight = false;
+            }
+
+            if(point.runningLeft == true)
+            {
+                root.x -= 10;
+                point.runningLeft = false;
+            }
+
             if(root.y == yPMaxT)//on ground
             {
                 yVelocity = 50;
                 yAcceleration = g;
             }
-            root.y -= yVelocity + 0.5*yAcceleration;
-            yVelocity += yAcceleration;
+            root.y -= yVelocity*dt + 0.5*yAcceleration*dt*dt;
+            yVelocity += yAcceleration*dt;
             if(root.y > yPMaxT)
             {
                 root.y  = yPMaxT;
@@ -106,27 +123,35 @@ Rectangle {
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
+            point.runningLeft = true;
             playerTexture.mirror = true;
-            changeRunRightFrame();
-            root.x-=5;            
-            dragged();
+            if(!jumping)
+            {
+                changeRunRightFrame();
+                root.x-=10;
+                dragged();
+            }
             break;
         case Qt.Key_Right:
+            point.runningRight = true;
             playerTexture.mirror = false;
-            changeRunRightFrame();
-            root.x+=5;
-            dragged();
+            if(!jumping)
+            {
+                changeRunRightFrame();
+                root.x+=10;
+                dragged();
+            }
             break;
         case Qt.Key_Up:
             playerJump();
-            //root.y-=5;
             bla();
             dragged();
             break;
-        case Qt.Key_Down:
-            root.y+=5;
-            bla();
-            dragged();
+        case Qt.Key_F:
+            //var component = Qt.createComponent("Bullet.qml")
+            if (componentBullet.status === Component.Ready){
+                componentBullet.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+            }
             break;
         }
     }

@@ -6,5 +6,16 @@
         <file>Cowboy/lose/lose.png</file>
         <file>Cowboy/walk/walk1.png</file>
         <file>Cowboy/walk/walk2.png</file>
+        <file>textures/alien/alien_1.png</file>
+        <file>textures/alien/alien_2.png</file>
+        <file>textures/alien/alien_3.png</file>
+        <file>textures/alien/alien_4.png</file>
+        <file>textures/alien/alien_5.png</file>
+        <file>textures/alien/alien_6.png</file>
+        <file>textures/decors/Decor1.png</file>
+        <file>textures/decors/Decor2.png</file>
+        <file>textures/decors/Decor3.png</file>
+        <file>textures/decors/stone.png</file>
+        <file>textures/background/4/background.png</file>
     </qresource>
 </RCC>
