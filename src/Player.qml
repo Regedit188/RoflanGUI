@@ -68,6 +68,45 @@ Rectangle {
         }
     }
 
+    Timer{
+        id: run_timer
+        interval: 10
+        running: false
+        repeat: true
+
+        property var yPMaxT: 375;
+        property var xVelocity: 20;
+        property var xVelocityMax: 100;
+        property var xAcceleration: 2.8;
+        property var g: -9.8;
+        property var dt: interval/100;
+
+        onTriggered: {
+            if(xVelocity > xVelocityMax)
+            {
+               xVelocity = xVelocityMax;
+            }
+
+            if(point.pressedRight == false && point.pressedLeft == false)
+            {
+                //playerTexture.source = "qrc:/Cowboy/stand/stand.png";
+                xVelocity = 20;
+                running: false;
+            }
+
+            if(point.pressedRight == true)
+            {
+                root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
+            }
+            else if(point.pressedLeft == true)
+            {
+                root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
+            }
+            xVelocity += xAcceleration*dt;
+
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         drag.target: root
@@ -120,6 +159,14 @@ Rectangle {
 
     }
 
+    function playerRun()
+    {
+        if(run_timer.running == false)
+        {
+            run_timer.running = true;
+        }
+    }
+
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
@@ -128,7 +175,7 @@ Rectangle {
             if(!jumping)
             {
                 changeRunRightFrame();
-                root.x-=10;
+                playerRun();
                 dragged();
             }
 
@@ -140,7 +187,7 @@ Rectangle {
             if(!jumping)
             {
                 changeRunRightFrame();
-                root.x+=10;
+                playerRun();
                 dragged();
             }
             break;
