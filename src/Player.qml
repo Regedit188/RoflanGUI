@@ -8,8 +8,8 @@ property alias color :point.color
 Rectangle {
     id:point
     anchors.centerIn: parent
-    width: 68
-    height: 92
+    width: 80
+    height: 110
     color: "blue"
     opacity: 0.8
 
@@ -19,6 +19,8 @@ Rectangle {
     property var jumping: false;
     property var runningRight: false;
     property var runningLeft: false;
+    property var pressedRight: false;
+    property var pressedLeft: false;
     property var componentBullet: Qt.createComponent("Bullet.qml");
 
 
@@ -41,16 +43,14 @@ Rectangle {
         property var dt: interval/100;
 
         onTriggered: {
-            if(point.runningRight == true)
+            if(point.pressedRight == true)
             {
-                root.x += 10;
-                point.runningRight = false;
+                root.x += 2;
             }
 
-            if(point.runningLeft == true)
+            if(point.pressedLeft == true)
             {
-                root.x -= 10;
-                point.runningLeft = false;
+                root.x -= 2;
             }
 
             if(root.y == yPMaxT)//on ground
@@ -65,6 +65,45 @@ Rectangle {
                 root.y  = yPMaxT;
                 running = false;
             }
+        }
+    }
+
+    Timer{
+        id: run_timer
+        interval: 10
+        running: false
+        repeat: true
+
+        property var yPMaxT: 375;
+        property var xVelocity: 20;
+        property var xVelocityMax: 100;
+        property var xAcceleration: 2.8;
+        property var g: -9.8;
+        property var dt: interval/100;
+
+        onTriggered: {
+            if(xVelocity > xVelocityMax)
+            {
+               xVelocity = xVelocityMax;
+            }
+
+            if(point.pressedRight == false && point.pressedLeft == false)
+            {
+                //playerTexture.source = "qrc:/Cowboy/stand/stand.png";
+                xVelocity = 20;
+                running: false;
+            }
+
+            if(point.pressedRight == true)
+            {
+                root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
+            }
+            else if(point.pressedLeft == true)
+            {
+                root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
+            }
+            xVelocity += xAcceleration*dt;
+
         }
     }
 
@@ -120,25 +159,35 @@ Rectangle {
 
     }
 
+    function playerRun()
+    {
+        if(run_timer.running == false)
+        {
+            run_timer.running = true;
+        }
+    }
+
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
-            point.runningLeft = true;
+            point.pressedLeft = true;
             playerTexture.mirror = true;
             if(!jumping)
             {
                 changeRunRightFrame();
-                root.x-=10;
+                playerRun();
                 dragged();
             }
+
+
             break;
         case Qt.Key_Right:
-            point.runningRight = true;
+            point.pressedRight = true;
             playerTexture.mirror = false;
             if(!jumping)
             {
                 changeRunRightFrame();
-                root.x+=10;
+                playerRun();
                 dragged();
             }
             break;
@@ -148,10 +197,22 @@ Rectangle {
             dragged();
             break;
         case Qt.Key_F:
-            //var component = Qt.createComponent("Bullet.qml")
+            var component = Qt.createComponent("Bullet.qml")
             if (componentBullet.status === Component.Ready){
                 componentBullet.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
             }
+            break;
+        }
+    }
+
+    Keys.onReleased:
+    {
+        switch(event.key) {
+        case Qt.Key_Left:
+            point.pressedLeft = false;
+            break;
+        case Qt.Key_Right:
+            point.pressedRight = false;
             break;
         }
     }
