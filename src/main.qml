@@ -17,6 +17,13 @@ Window {
         height: 480
     }
 
+    Text {
+        id: gameInfo
+        text: qsTr("Health: 100")
+        leftPadding: 700
+        topPadding: 50
+    }
+
     Timer{
         id: enemy_timer
         interval: 1300
@@ -31,7 +38,7 @@ Window {
         }
     }
 
-    Timer{
+    /*Timer{
         id: buller_time
         interval: 500
         running: true
@@ -42,18 +49,30 @@ Window {
                 component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
             }
         }
-    }
+    }*/
 
     Player{
         id: playerArea
         x:40
         y:375
+        property var health: 100;
+
+        onHealthChanged:
+        {
+            /*if(playerArea.health <= 0)
+            {
+                playerArea.health = 0;
+            }*/
+
+            gameInfo.text = "Health: "+ playerArea.health;
+        }
     }
 
 
     Rectangle{
         id: player
         color: "blue"
+
         Canvas {
             id: canvas2
             anchors.fill: parent
@@ -70,7 +89,7 @@ Window {
                 var ctx = getContext("2d");
                 ctx.clearRect(0, 0, canvas2.width, canvas2.height);
                 ctx.beginPath();
-                requestPaint()
+                requestPaint();
             }
         }
     }
@@ -91,6 +110,7 @@ Window {
 
     Item {
         anchors.fill: parent
+
 
         Canvas {
             id: canvas

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 Rectangle {
+    id: enemy
     width: 68
     height: 92
     color: "green"
@@ -9,6 +10,16 @@ Rectangle {
         to: -60
         duration: 1000
         running: true
+    }
+
+    onXChanged:
+    {
+        if (playerArea.x > enemy.x){
+            if(playerArea.y > enemy.y){
+                enemy.destroy();
+                playerArea.health -= 10;
+            }
+        }
     }
 
     Image {

@@ -23,6 +23,15 @@ Rectangle {
     property var pressedLeft: false;
     property var componentBullet: Qt.createComponent("Bullet.qml");
 
+    onXChanged:
+    {
+        if(playerArea.health <= 0)
+        {
+            playerTexture.source = "qrc:/Cowboy/lose/lose.png";
+        }
+    }
+
+
 
     Image {
         id: playerTexture
@@ -41,6 +50,7 @@ Rectangle {
         property var yAcceleration: 0;
         property var g: -9.8;
         property var dt: interval/100;
+
 
         onTriggered: {
             if(point.pressedRight == true)
@@ -196,12 +206,13 @@ Rectangle {
             bla();
             dragged();
             break;
-        case Qt.Key_F:
+        /*case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
             if (componentBullet.status === Component.Ready){
                 componentBullet.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+                dragged();
             }
-            break;
+            break;*/
         }
     }
 
