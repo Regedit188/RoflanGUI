@@ -36,17 +36,28 @@ Window {
     }
 
 
+
     Rectangle {
                //anchors.centerIn: parent
-               id: button
-               width: 50; height: 40; radius: 5; color: "lightgray"
-               Text { anchors.centerIn: button; text: "Quit"; color: "black" }
+               id: buttonQuit
+               width: 50;
+               height: 40;
+               radius: 5;
+               color: "lightgray"
+               z:11;
+               
+               Text { 
+                   anchors.centerIn: buttonQuit;
+                   text: "Quit";
+                   color: "black"
+               }
+
                MouseArea {
                    anchors.fill: parent
                    onClicked: Qt.quit()
                }
            }
-
+           
     Timer{
         id: enemy_timer
         interval: 1300
