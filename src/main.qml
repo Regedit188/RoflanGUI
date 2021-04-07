@@ -46,19 +46,6 @@ Window {
         }
     }
 
-//    Timer{
-//        id: buller_time
-//        interval: 500
-//        running: true
-//        repeat: true
-//        onTriggered: {
-//            var component = Qt.createComponent("Bullet.qml")
-//            if (component.status === Component.Ready){
-//                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
-//            }
-//        }
-//    }
-
     function createElement(x, y){
         var component = Qt.createComponent("Elements.qml")
         var e = component.createObject(root, {"x":x, "y":y})
@@ -102,6 +89,13 @@ Window {
             Component.onCompleted: {
                 createElement(310, 350);
                 playerArea.dragged.connect(repaint)
+                playerArea.shot.connect(shoot)
+            }
+            function shoot(){
+                var component = Qt.createComponent("Bullet.qml")
+                if (component.status === Component.Ready){
+                    component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+                }
             }
 
             function repaint() {

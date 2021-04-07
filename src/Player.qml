@@ -4,6 +4,7 @@ Item {
 id: root
 
 signal dragged()
+signal shot()
 property alias color :point.color
 Rectangle {
     id:point
@@ -230,9 +231,9 @@ Rectangle {
             break;
         case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
-            if (componentBullet.status === Component.Ready){
-                componentBullet.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
-                dragged();
+            if (component.status === Component.Ready){
+                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+                shot();
             }
             break;
         }
