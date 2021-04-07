@@ -4,6 +4,8 @@ import QtQuick.Window 2.12
 Window {
     property var enemyList: []
     property var elementsList: []
+    property var decorsList: []
+
     id:root
     visible: true
     width: 790
@@ -32,6 +34,18 @@ Window {
         topPadding: 60
     }
 
+
+    Rectangle {
+               //anchors.centerIn: parent
+               id: button
+               width: 50; height: 40; radius: 5; color: "lightgray"
+               Text { anchors.centerIn: button; text: "Quit"; color: "black" }
+               MouseArea {
+                   anchors.fill: parent
+                   onClicked: Qt.quit()
+               }
+           }
+
     Timer{
         id: enemy_timer
         interval: 1300
@@ -52,13 +66,22 @@ Window {
         elementsList.push(e)
     }
 
+    function createDecors(x, y, idDec2){
+        var component = Qt.createComponent("Decors.qml")
+        var e = component.createObject(root, {"x":x, "y":y})
+        e.idDec = idDec2;
+        decorsList.push(e)
+    }
+
+
+
     Player{
         id: playerArea
         x:40
         y:375
-        property real health: 100;
-        property real score: 0;
-        property bool isAlive: true;
+        property var health: 100;
+        property var score: 0;
+        property var isAlive: true;
 
         onHealthChanged:
         {
@@ -88,14 +111,37 @@ Window {
             }
             Component.onCompleted: {
                 createElement(310, 350);
+                createDecors(210, 250);
+                createDecors(110, 120);
+                createDecors(520, 220);
+
                 playerArea.dragged.connect(repaint)
                 playerArea.shot.connect(shoot)
+                playerArea.heal.connect(healing)
+                //playerArea.score.connect(scoring)
+                //playerArea.damage.connect(damaging)
             }
+
             function shoot(){
                 var component = Qt.createComponent("Bullet.qml")
                 if (component.status === Component.Ready){
                     component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 }
+            }
+
+            function damaging()
+            {
+                playerArea.health -= 25;
+            }
+
+            function scoring()
+            {
+                playerArea.score += 10;
+            }
+
+            function healing()
+            {
+                playerArea.health += 50;
             }
 
             function repaint() {
@@ -148,3 +194,4 @@ Window {
         }
     }
 }
+
