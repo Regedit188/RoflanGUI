@@ -25,6 +25,7 @@ Rectangle {
                 if (bullet.x > en.x){
                     if(bullet.y > en.y){
                         en.destroy()
+                        //playerArea.score += 10;
                         bullet.destroy()
                     }
                 }

@@ -1,13 +1,14 @@
-import QtQuick 2.0
+  import QtQuick 2.0
 
 Rectangle {
     id: enemy
     width: 68
     height: 92
     color: "green"
+
     NumberAnimation on x {
         from: x
-        to: -60
+        to: -80
         duration: 1000
         running: true
     }
@@ -17,7 +18,7 @@ Rectangle {
         if (playerArea.x > enemy.x){
             if(playerArea.y > enemy.y){
                 enemy.destroy();
-                playerArea.health -= 10;
+                playerArea.health -= 25;
             }
         }
     }
@@ -42,7 +43,9 @@ Rectangle {
             alienFrameNum  += 1;
             if(alienFrameNum > 6)
             {
+
                 alienFrameNum = 1;
+
             }
             alienTexture.source = "qrc:/textures/alien/alien_" + alienFrameNum +".png"
         }
