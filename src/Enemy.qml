@@ -1,7 +1,6 @@
-import QtQuick 2.0
+  import QtQuick 2.0
+
 Rectangle {
-    signal score()
-    signal damage()
     id: enemy
     width: 68
     height: 92
@@ -38,7 +37,7 @@ Rectangle {
         running: true
         repeat: true
 
-        property var alienFrameNum: 1;
+        property real alienFrameNum: 1;
 
         onTriggered: {
             alienFrameNum  += 1;
