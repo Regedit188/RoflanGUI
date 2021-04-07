@@ -4,6 +4,8 @@ import QtQuick.Window 2.12
 Window {
     property var enemyList: []
     property var elementsList: []
+    property var decorsList: []
+
     id:root
     visible: true
     width: 790
@@ -64,6 +66,15 @@ Window {
         elementsList.push(e)
     }
 
+    function createDecors(x, y, idDec2){
+        var component = Qt.createComponent("Decors.qml")
+        var e = component.createObject(root, {"x":x, "y":y})
+        e.idDec = idDec2;
+        decorsList.push(e)
+    }
+
+
+
     Player{
         id: playerArea
         x:40
@@ -100,6 +111,10 @@ Window {
             }
             Component.onCompleted: {
                 createElement(310, 350);
+                createDecors(210, 250);
+                createDecors(110, 120);
+                createDecors(520, 220);
+
                 playerArea.dragged.connect(repaint)
                 playerArea.shot.connect(shoot)
                 playerArea.heal.connect(healing)
