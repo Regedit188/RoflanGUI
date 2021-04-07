@@ -101,7 +101,7 @@ Rectangle {
                     if (root.x > en.x){
                         if(root.y > en.y){
                             en.destroy()
-                            //playerArea.score += 10;
+                            heal();
                         }
                     }
                 }
