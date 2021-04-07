@@ -29,6 +29,15 @@ Rectangle {
     //property var componentElements: Qt.createComponent("Elemets.qml");
     property var isAlive: true;
 
+    Component.onCompleted: {
+        point.fff.connect(fffing)
+    }
+
+    function fffing()
+    {
+
+    }
+
     onXChanged:
     {
         if(playerArea.health <= 0)

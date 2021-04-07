@@ -16,6 +16,7 @@ Window {
         mirror: false
         width: 640
         height: 480
+        z: 0
     }
 
     Text {
@@ -38,6 +39,11 @@ Window {
         running: true
         repeat: true
         onTriggered: {
+            if(playerArea.isAlive == false)
+            {
+                running = false;
+            }
+
             var component = Qt.createComponent("Enemy.qml")
             if (component.status === Component.Ready && playerArea.isAlive){
                 var e = component.createObject(root, {"x":510, "y":350})
@@ -64,6 +70,9 @@ Window {
         {
             if(playerArea.health <= 0)
             {
+                playerArea.isAlive = false;
+                backgroundTexture.source = "qrc:/Cowboy/lose/loseScreen.png";
+                backgroundTexture.z  = 10;
                 //playerArea.destroy();
                 //playerTexture.source = "qrc:/Cowboy/lose/lose.png";
             }
@@ -88,11 +97,9 @@ Window {
             }
             Component.onCompleted: {
                 createElement(310, 350);
-                playerArea.dragged.connect(repaint)
-                playerArea.shot.connect(shoot)
-                playerArea.heal.connect(healing)
-                //playerArea.score.connect(scoring)
-                //playerArea.damage.connect(damaging)
+                playerArea.dragged.connect(repaint);
+                playerArea.shot.connect(shoot);
+                playerArea.heal.connect(healing);
             }
 
             function shoot(){
