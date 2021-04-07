@@ -33,6 +33,25 @@ Window {
         topPadding: 60
     }
 
+<<<<<<< Updated upstream
+=======
+
+    Rectangle {
+               //anchors.centerIn: parent
+               id: buttonQuit
+               width: 50;
+               height: 40;
+               radius: 5;
+               color: "lightgray"
+               z:11;
+               Text { anchors.centerIn: buttonQuit; text: "Quit"; color: "black" }
+               MouseArea {
+                   anchors.fill: parent
+                   onClicked: Qt.quit()
+               }
+           }
+
+>>>>>>> Stashed changes
     Timer{
         id: enemy_timer
         interval: 1300
