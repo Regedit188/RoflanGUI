@@ -3,9 +3,10 @@ import QtQuick.Window 2.12
 
 Window {
     property var enemyList: []
+    property var elementsList: []
     id:root
     visible: true
-    width: 640
+    width: 790
     height: 480
     title: qsTr("Cowboys against the aliens")
 
@@ -24,6 +25,13 @@ Window {
         topPadding: 50
     }
 
+    Text {
+        id: scoreInfo
+        text: qsTr("Score: 0")
+        leftPadding: 700
+        topPadding: 60
+    }
+
     Timer{
         id: enemy_timer
         interval: 1300
@@ -31,40 +39,74 @@ Window {
         repeat: true
         onTriggered: {
             var component = Qt.createComponent("Enemy.qml")
-            if (component.status === Component.Ready){
+            if (component.status === Component.Ready && playerArea.isAlive){
                 var e = component.createObject(root, {"x":510, "y":350})
                 enemyList.push(e)
             }
         }
     }
 
-    /*Timer{
-        id: buller_time
-        interval: 500
-        running: true
-        repeat: true
-        onTriggered: {
-            var component = Qt.createComponent("Bullet.qml")
-            if (component.status === Component.Ready){
-                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
-            }
-        }
-    }*/
+//    Timer{
+//        id: buller_time
+//        interval: 500
+//        running: true
+//        repeat: true
+//        onTriggered: {
+//            var component = Qt.createComponent("Bullet.qml")
+//            if (component.status === Component.Ready){
+//                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+//            }
+//        }
+//    }
+
+
+
+//    Timer{
+//        id: elements_timer
+//        interval: 2300
+//        running: true
+//        repeat: true
+//        onTriggered: {
+//            var component = Qt.createComponent("Elements.qml")
+//            if (component.status === Component.Ready){
+//                var e = component.createObject(root, {"x":510, "y":350})
+//                elementsList.push(e)
+//            }
+//        }
+//    }
+
+    function createElement(x, y){
+        var component = Qt.createComponent("Elements.qml")
+        var e = component.createObject(root, {"x":x, "y":y})
+        elementsList.push(e)
+    }
 
     Player{
         id: playerArea
         x:40
         y:375
         property var health: 100;
+        property var score: 0;
+        property var isAlive: true;
+
+
+        Component.onCompleted: {
+            playerArea.dragged.connect(createElement(310, 350))
+         }
+//        Component.onCompleted: {
+//            playerArea.dragged.connect(createElement(410, 350))
+//        }
 
         onHealthChanged:
         {
-            /*if(playerArea.health <= 0)
+            if(playerArea.health <= 0)
             {
-                playerArea.health = 0;
-            }*/
+                //playerArea.destroy();
+                //playerTexture.source = "qrc:/Cowboy/lose/lose.png";
+            }
 
             gameInfo.text = "Health: "+ playerArea.health;
+            scoreInfo.text = "Score: "+ playerArea.score;
         }
     }
 

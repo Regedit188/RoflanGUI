@@ -13,6 +13,7 @@ Rectangle {
     color: "blue"
     opacity: 0.8
 
+
     property var yPMin: 250;
     property var yPMax: 375;
     property var runFrame: 0;
@@ -22,16 +23,18 @@ Rectangle {
     property var pressedRight: false;
     property var pressedLeft: false;
     property var componentBullet: Qt.createComponent("Bullet.qml");
+    property var componentPlayer: Qt.createComponent("Player.qml");
+    //property var componentElements: Qt.createComponent("Elemets.qml");
+    property var isAlive: true;
 
     onXChanged:
     {
         if(playerArea.health <= 0)
         {
             playerTexture.source = "qrc:/Cowboy/lose/lose.png";
+
         }
     }
-
-
 
     Image {
         id: playerTexture
@@ -177,6 +180,11 @@ Rectangle {
         }
     }
 
+    function die(){
+        gameInfo.text = "\nCHECK: "
+        playerTexture.source = "qrc:/Cowboy/lose/lose.png";
+    }
+
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
@@ -206,13 +214,13 @@ Rectangle {
             bla();
             dragged();
             break;
-        /*case Qt.Key_F:
+        case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
             if (componentBullet.status === Component.Ready){
                 componentBullet.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 dragged();
             }
-            break;*/
+            break;
         }
     }
 
