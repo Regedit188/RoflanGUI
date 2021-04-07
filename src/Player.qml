@@ -5,9 +5,9 @@ id: root
 
 signal dragged()
 signal shot()
-signal heal()
 property alias color :point.color
 Rectangle {
+
     id:point
     anchors.centerIn: parent
     width: 80
@@ -15,26 +15,24 @@ Rectangle {
     color: "blue"
     opacity: 0.8
 
-
-    property var yPMin: 250;
-    property var yPMax: 375;
-    property var runFrame: 0;
-    property var jumping: false;
-    property var runningRight: false;
-    property var runningLeft: false;
-    property var pressedRight: false;
-    property var pressedLeft: false;
+    property real yPMin: 250;
+    property real yPMax: 375;
+    property real runFrame: 0;
+    property bool jumping: false;
+    property bool runningRight: false;
+    property bool runningLeft: false;
+    property bool pressedRight: false;
+    property bool pressedLeft: false;
     property var componentBullet: Qt.createComponent("Bullet.qml");
     property var componentPlayer: Qt.createComponent("Player.qml");
     //property var componentElements: Qt.createComponent("Elemets.qml");
-    property var isAlive: true;
+    property bool isAlive: true;
 
     onXChanged:
     {
         if(playerArea.health <= 0)
         {
             playerTexture.source = "qrc:/Cowboy/lose/lose.png";
-
         }
     }
 
@@ -50,11 +48,11 @@ Rectangle {
         running: false
         repeat: true
 
-        property var yPMaxT: 375;
-        property var yVelocity: 50;
-        property var yAcceleration: 0;
-        property var g: -9.8;
-        property var dt: interval/100;
+        property real yPMaxT: 375;
+        property real yVelocity: 50;
+        property real yAcceleration: 0;
+        property real g: -9.8;
+        property real dt: interval/100;
 
 
         onTriggered: {
@@ -89,12 +87,12 @@ Rectangle {
         running: false
         repeat: true
 
-        property var yPMaxT: 375;
-        property var xVelocity: 20;
-        property var xVelocityMax: 100;
-        property var xAcceleration: 2.8;
-        property var g: -9.8;
-        property var dt: interval/100;
+        property real yPMaxT: 375;
+        property real xVelocity: 20;
+        property real xVelocityMax: 100;
+        property real xAcceleration: 2.8;
+        property real g: -9.8;
+        property real dt: interval/100;
 
         function  checkHeal()
         {
@@ -103,7 +101,7 @@ Rectangle {
                     if (root.x > en.x){
                         if(root.y > en.y){
                             en.destroy()
-                            heal();
+                            //playerArea.score += 10;
                         }
                     }
                 }
