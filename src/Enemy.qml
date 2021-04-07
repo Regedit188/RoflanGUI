@@ -1,4 +1,5 @@
-import QtQuick 2.0
+  import QtQuick 2.0
+
 Rectangle {
     id: enemy
     width: 68
@@ -36,7 +37,7 @@ Rectangle {
         running: true
         repeat: true
 
-        property var alienFrameNum: 1;
+        property real alienFrameNum: 1;
 
         onTriggered: {
             alienFrameNum  += 1;

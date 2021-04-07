@@ -4,6 +4,8 @@ import QtQuick.Window 2.12
 Window {
     property var enemyList: []
     property var elementsList: []
+    property var decorsList: []
+
     id:root
     visible: true
     width: 790
@@ -33,8 +35,7 @@ Window {
         topPadding: 60
     }
 
-<<<<<<< Updated upstream
-=======
+
 
     Rectangle {
                //anchors.centerIn: parent
@@ -44,14 +45,19 @@ Window {
                radius: 5;
                color: "lightgray"
                z:11;
-               Text { anchors.centerIn: buttonQuit; text: "Quit"; color: "black" }
+               
+               Text { 
+                   anchors.centerIn: buttonQuit;
+                   text: "Quit";
+                   color: "black"
+               }
+
                MouseArea {
                    anchors.fill: parent
                    onClicked: Qt.quit()
                }
            }
-
->>>>>>> Stashed changes
+           
     Timer{
         id: enemy_timer
         interval: 1300
@@ -76,6 +82,15 @@ Window {
         var e = component.createObject(root, {"x":x, "y":y})
         elementsList.push(e)
     }
+
+    function createDecors(x, y, idDec2){
+        var component = Qt.createComponent("Decors.qml")
+        var e = component.createObject(root, {"x":x, "y":y})
+        e.idDec = idDec2;
+        decorsList.push(e)
+    }
+
+
 
     Player{
         id: playerArea
@@ -116,9 +131,14 @@ Window {
             }
             Component.onCompleted: {
                 createElement(310, 350);
+
                 playerArea.dragged.connect(repaint);
                 playerArea.shot.connect(shoot);
                 playerArea.heal.connect(healing);
+                
+                createDecors(210, 250);
+                createDecors(110, 120);
+                createDecors(520, 220);
             }
 
             function shoot(){
@@ -193,3 +213,4 @@ Window {
         }
     }
 }
+
