@@ -5,6 +5,7 @@ id: root
 
 signal dragged()
 signal shot()
+signal heal()
 property alias color :point.color
 Rectangle {
     id:point
@@ -102,7 +103,7 @@ Rectangle {
                     if (root.x > en.x){
                         if(root.y > en.y){
                             en.destroy()
-                            //playerArea.score += 10;
+                            heal();
                         }
                     }
                 }
