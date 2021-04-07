@@ -12,6 +12,6 @@ Rectangle {
         width: 68
         height: 92
     }
-    property var bonusFrameNum: 1;
+    property real bonusFrameNum: 1;
 
 }
