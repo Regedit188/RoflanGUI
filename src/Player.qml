@@ -94,6 +94,19 @@ Rectangle {
         property var g: -9.8;
         property var dt: interval/100;
 
+        function  checkHeal()
+        {
+            for (var i = 0; i < elementsList.length; i++){
+                var en = elementsList[i]
+                    if (root.x > en.x){
+                        if(root.y > en.y){
+                            en.destroy()
+                            //playerArea.score += 10;
+                        }
+                    }
+                }
+        }
+
         onTriggered: {
             if(xVelocity > xVelocityMax)
             {
@@ -116,6 +129,7 @@ Rectangle {
                 root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
             }
             xVelocity += xAcceleration*dt;
+            checkHeal();
 
         }
     }

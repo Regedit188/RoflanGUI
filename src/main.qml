@@ -59,22 +59,6 @@ Window {
 //        }
 //    }
 
-
-
-//    Timer{
-//        id: elements_timer
-//        interval: 2300
-//        running: true
-//        repeat: true
-//        onTriggered: {
-//            var component = Qt.createComponent("Elements.qml")
-//            if (component.status === Component.Ready){
-//                var e = component.createObject(root, {"x":510, "y":350})
-//                elementsList.push(e)
-//            }
-//        }
-//    }
-
     function createElement(x, y){
         var component = Qt.createComponent("Elements.qml")
         var e = component.createObject(root, {"x":x, "y":y})
@@ -88,14 +72,6 @@ Window {
         property var health: 100;
         property var score: 0;
         property var isAlive: true;
-
-
-        Component.onCompleted: {
-            playerArea.dragged.connect(createElement(310, 350))
-         }
-//        Component.onCompleted: {
-//            playerArea.dragged.connect(createElement(410, 350))
-//        }
 
         onHealthChanged:
         {
@@ -124,6 +100,7 @@ Window {
                 ctx.stroke();
             }
             Component.onCompleted: {
+                createElement(310, 350);
                 playerArea.dragged.connect(repaint)
             }
 
