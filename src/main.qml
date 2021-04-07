@@ -90,12 +90,31 @@ Window {
                 createElement(310, 350);
                 playerArea.dragged.connect(repaint)
                 playerArea.shot.connect(shoot)
+                playerArea.heal.connect(healing)
+                //playerArea.score.connect(scoring)
+                //playerArea.damage.connect(damaging)
             }
+
             function shoot(){
                 var component = Qt.createComponent("Bullet.qml")
                 if (component.status === Component.Ready){
                     component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 }
+            }
+
+            function damaging()
+            {
+                playerArea.health -= 25;
+            }
+
+            function scoring()
+            {
+                playerArea.score += 10;
+            }
+
+            function healing()
+            {
+                playerArea.health += 50;
             }
 
             function repaint() {
