@@ -4,14 +4,14 @@ Rectangle {
     id: elemets
     width: 68
     height: 92
-    color: "orange"
-
+    color: "transparent"
     Image {
         id: elementTexture
         source: "qrc:/textures/elements/bonus1.png"
         width: 68
         height: 92
     }
+
     property real bonusFrameNum: 1;
 
 }

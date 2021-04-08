@@ -185,7 +185,6 @@ Window {
     }
 
 
-
     Item {
         anchors.fill: parent
 

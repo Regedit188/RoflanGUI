@@ -4,7 +4,7 @@ Rectangle {
     id: bullet
     width: 20
     height: 10
-    color: "black"
+    color: "transparent"
     NumberAnimation on x {
         from: x
         to: 700

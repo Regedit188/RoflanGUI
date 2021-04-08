@@ -4,7 +4,7 @@ Rectangle {
     id: decors
     width: 68
     height: 92
-    color: "orange"
+    color: "transparent"
     property var idDec: 1;
     Image {
         id: elementTexture

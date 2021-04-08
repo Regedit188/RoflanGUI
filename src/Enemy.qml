@@ -4,8 +4,7 @@ Rectangle {
     id: enemy
     width: 68
     height: 92
-    color: "green"
-
+    color: "transparent"
     NumberAnimation on x {
         from: x
         to: -80
