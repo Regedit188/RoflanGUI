@@ -13,9 +13,8 @@ Rectangle {
     anchors.centerIn: parent
     width: 80
     height: 110
-    color: "blue"
     opacity: 0.8
-
+    color: "transparent"
     property real yPMin: 250;
     property real yPMax: 375;
     property real runFrame: 0;
