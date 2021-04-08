@@ -43,45 +43,6 @@ Rectangle {
     }
 
     Timer{
-        id: jump_timer
-        interval: 10
-        running: false
-        repeat: true
-
-        property real yPMaxT: 375;
-        property real yVelocity: 50;
-        property real yAcceleration: 0;
-        property real g: -9.8;
-        property real dt: interval/100;
-
-
-        onTriggered: {
-            if(point.pressedRight == true)
-            {
-                root.x += 2;
-            }
-
-            if(point.pressedLeft == true)
-            {
-                root.x -= 2;
-            }
-
-            if(root.y == yPMaxT)//on ground
-            {
-                yVelocity = 50;
-                yAcceleration = g;
-            }
-            root.y -= yVelocity*dt + 0.5*yAcceleration*dt*dt;
-            yVelocity += yAcceleration*dt;
-            if(root.y > yPMaxT)
-            {
-                root.y  = yPMaxT;
-                running = false;
-            }
-        }
-    }
-
-    Timer{
         id: run_timer
         interval: 10
         running: false
@@ -131,6 +92,45 @@ Rectangle {
             xVelocity += xAcceleration*dt;
             checkHeal();
 
+        }
+    }
+
+    Timer{
+        id: jump_timer
+        interval: 10
+        running: false
+        repeat: true
+
+        property real yPMaxT: 375;
+        property real yVelocity: 50;
+        property real yAcceleration: 0;
+        property real g: -9.8;
+        property real dt: interval/100;
+
+
+        onTriggered: {
+            if(point.pressedRight == true)
+            {
+                root.x += 2;
+            }
+
+            if(point.pressedLeft == true)
+            {
+                root.x -= 2;
+            }
+
+            if(root.y == yPMaxT)//on ground
+            {
+                yVelocity = 50;
+                yAcceleration = g;
+            }
+            root.y -= yVelocity*dt + 0.5*yAcceleration*dt*dt;
+            yVelocity += yAcceleration*dt;
+            if(root.y > yPMaxT)
+            {
+                root.y  = yPMaxT;
+                running = false;
+            }
         }
     }
 

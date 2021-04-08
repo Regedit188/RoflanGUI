@@ -35,7 +35,24 @@ Window {
         topPadding: 60
     }
 
+    Timer{
+        id: enemy_timer
+        interval: 1300
+        running: true
+        repeat: true
+        onTriggered: {
+            if(playerArea.isAlive == false)
+            {
+                running = false;
+            }
 
+            var component = Qt.createComponent("Enemy.qml")
+            if (component.status === Component.Ready && playerArea.isAlive){
+                var e = component.createObject(root, {"x":510, "y":350})
+                enemyList.push(e)
+            }
+        }
+    }
 
     Rectangle {
                //anchors.centerIn: parent
@@ -58,24 +75,7 @@ Window {
                }
            }
            
-    Timer{
-        id: enemy_timer
-        interval: 1300
-        running: true
-        repeat: true
-        onTriggered: {
-            if(playerArea.isAlive == false)
-            {
-                running = false;
-            }
 
-            var component = Qt.createComponent("Enemy.qml")
-            if (component.status === Component.Ready && playerArea.isAlive){
-                var e = component.createObject(root, {"x":510, "y":350})
-                enemyList.push(e)
-            }
-        }
-    }
 
     function createElement(x, y){
         var component = Qt.createComponent("Elements.qml")
@@ -89,7 +89,6 @@ Window {
         e.idDec = idDec2;
         decorsList.push(e)
     }
-
 
 
     Player{
@@ -173,14 +172,15 @@ Window {
     }
 
     Point {
-        id: pointA
-        x: 0
+        id: pointB
+        x: 640
         y: 440
     }
 
+
     Point {
-        id: pointB
-        x: 640
+        id: pointA
+        x: 0
         y: 440
     }
 
