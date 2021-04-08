@@ -5,6 +5,7 @@ id: root
 
 signal dragged()
 signal shot()
+signal heal()
 property alias color :point.color
 Rectangle {
 
@@ -27,15 +28,6 @@ Rectangle {
     property var componentPlayer: Qt.createComponent("Player.qml");
     //property var componentElements: Qt.createComponent("Elemets.qml");
     property bool isAlive: true;
-
-    Component.onCompleted: {
-        point.fff.connect(fffing)
-    }
-
-    function fffing()
-    {
-
-    }
 
     onXChanged:
     {
