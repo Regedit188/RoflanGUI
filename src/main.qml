@@ -35,16 +35,17 @@ Window {
         topPadding: 60
     }
 
+
     Timer{
         id: enemy_timer
         interval: 1300
         running: true
         repeat: true
         onTriggered: {
-            if(playerArea.isAlive == false)
-            {
-                running = false;
-            }
+//            if(playerArea.isAlive == false)
+//            {
+//                running = false;
+//            }
 
             var component = Qt.createComponent("Enemy.qml")
             if (component.status === Component.Ready && playerArea.isAlive){
@@ -54,9 +55,13 @@ Window {
         }
     }
 
+
+
     Rectangle {
                //anchors.centerIn: parent
                id: buttonQuit
+               x: 5
+               y: 3
                width: 50;
                height: 40;
                radius: 5;
@@ -73,7 +78,34 @@ Window {
                    anchors.fill: parent
                    onClicked: Qt.quit()
                }
-           }
+       }
+
+    Rectangle {
+
+               id: buttonRestart
+               x: 62
+               y: 3
+               width: 90;
+               height: 40;
+               radius: 5;
+               color: "lightgray"
+
+               z:11;
+
+               Text {
+                   anchors.centerIn: buttonRestart;
+                   text: "Restart game";
+                   color: "black"
+               }
+
+               MouseArea {
+                   anchors.fill: parent
+                   onClicked: {
+                        restart()
+                   }
+
+               }
+       }
            
 
 
@@ -90,6 +122,18 @@ Window {
         decorsList.push(e)
     }
 
+    function restart(){
+       if(playerArea.isAlive== false){
+            playerArea.isAlive = true;
+            playerArea.health = 100;
+            playerArea.score = 0;
+            backgroundTexture.source = "qrc:/textures/background/4/background.png";
+            backgroundTexture.z  = 0;
+        }
+    }
+
+
+
 
     Player{
         id: playerArea
@@ -101,14 +145,19 @@ Window {
 
         onHealthChanged:
         {
+
             if(playerArea.health <= 0)
             {
                 playerArea.isAlive = false;
                 backgroundTexture.source = "qrc:/Cowboy/lose/loseScreen.png";
                 backgroundTexture.z  = 10;
+
+
                 //playerArea.destroy();
                 //playerTexture.source = "qrc:/Cowboy/lose/lose.png";
+
             }
+
 
             gameInfo.text = "Health: "+ playerArea.health;
             scoreInfo.text = "Score: "+ playerArea.score;
