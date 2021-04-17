@@ -123,13 +123,23 @@ Window {
     }
 
     function restart(){
-       if(playerArea.isAlive== false){
             playerArea.isAlive = true;
             playerArea.health = 100;
             playerArea.score = 0;
+            playerArea.x = 40;
+            playerArea.y = 375;
             backgroundTexture.source = "qrc:/textures/background/4/background.png";
             backgroundTexture.z  = 0;
-        }
+            createElement(310, 350);
+    }
+
+    function clearElements()
+    {
+        for (var i = 0; i < elementsList.length; i++)
+        {
+            var en = elementsList[i]
+            en.destroy()
+            }
     }
 
 
@@ -139,6 +149,7 @@ Window {
         id: playerArea
         x:40
         y:375
+        z:9
         property var health: 100;
         property var score: 0;
         property var isAlive: true;

@@ -230,8 +230,10 @@ Rectangle {
             break;
         case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
+            var right = - 700;
             if (component.status === Component.Ready){
-                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+                right = (playerTexture.mirror == true) ? -700 : 700;
+                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y, direction: right})
                 shot();
             }
             break;

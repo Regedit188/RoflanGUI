@@ -5,9 +5,10 @@ Rectangle {
     width: 20
     height: 10
     color: "transparent"
+    property real direction: 700;
     NumberAnimation on x {
         from: x
-        to: 700
+        to: bullet.direction
         duration: 700
         running: true
     }
