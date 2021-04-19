@@ -15,6 +15,7 @@ Rectangle {
 
     Image {
         source: "qrc:/Cowboy/bullet/bullet.png"
+        mirror: playerArea.bulletMirrored
     }
 
     onXChanged: {

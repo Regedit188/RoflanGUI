@@ -162,6 +162,7 @@ Window {
         property var isAlive: true;
         property var direction: 700;
         property var deltaX: 50;
+        property var bulletMirrored: false;
 
         onHealthChanged:
         {
@@ -229,12 +230,14 @@ Window {
             {
                 playerArea.direction = 700;
                 playerArea.deltaX = 50;
+                playerArea.bulletMirrored = false;
             }
 
             function changeDirectionLeft()
             {
                 playerArea.direction = -700;
                 playerArea.deltaX = -77;
+                playerArea.bulletMirrored = true;
             }
 
             function scoring()
