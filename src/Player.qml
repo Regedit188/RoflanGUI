@@ -6,6 +6,8 @@ id: root
 signal dragged()
 signal shot()
 signal heal()
+signal changeR()
+signal changeL()
 property alias color :point.color
 Rectangle {
 
@@ -112,11 +114,13 @@ Rectangle {
             if(point.pressedRight == true)
             {
                 root.x += 2;
+                changeR()
             }
 
             if(point.pressedLeft == true)
             {
                 root.x -= 2;
+                changeL();
             }
 
             if(root.y == yPMaxT)//on ground
@@ -209,6 +213,7 @@ Rectangle {
                 changeRunRightFrame();
                 playerRun();
                 dragged();
+                changeL();
             }
 
 
@@ -221,6 +226,7 @@ Rectangle {
                 changeRunRightFrame();
                 playerRun();
                 dragged();
+                changeR();
             }
             break;
         case Qt.Key_Up:
@@ -230,10 +236,9 @@ Rectangle {
             break;
         case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
-            var right = - 700;
             if (component.status === Component.Ready){
-                right = (playerTexture.mirror == true) ? -700 : 700;
-                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y, direction: right})
+
+                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 shot();
             }
             break;

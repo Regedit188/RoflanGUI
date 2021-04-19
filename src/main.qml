@@ -5,6 +5,7 @@ Window {
     property var enemyList: []
     property var elementsList: []
     property var decorsList: []
+    property var platformList: []
 
     id:root
     visible: true
@@ -122,6 +123,12 @@ Window {
         decorsList.push(e)
     }
 
+    function createPlatform(x, y){
+        var component = Qt.createComponent("Platform.qml")
+        var e = component.createObject(root, {"x":x, "y":y})
+        platformList.push(e)
+    }
+
     function restart(){
             playerArea.isAlive = true;
             playerArea.health = 100;
@@ -153,6 +160,8 @@ Window {
         property var health: 100;
         property var score: 0;
         property var isAlive: true;
+        property var direction: 700;
+        property var deltaX: 50;
 
         onHealthChanged:
         {
@@ -194,22 +203,38 @@ Window {
                 playerArea.dragged.connect(repaint);
                 playerArea.shot.connect(shoot);
                 playerArea.heal.connect(healing);
+                playerArea.changeR.connect(changeDirectionRight);
+                playerArea.changeL.connect(changeDirectionLeft);
                 
-                createDecors(210, 250);
-                createDecors(110, 120);
-                createDecors(520, 220);
+                //createDecors(210, 250);
+                //createDecors(110, 120);
+                //createDecors(520, 220);
+
+                createPlatform(110, 320);
             }
 
             function shoot(){
                 var component = Qt.createComponent("Bullet.qml")
                 if (component.status === Component.Ready){
-                    component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
+                    component.createObject(root, {"x":playerArea.x+playerArea.deltaX, "y":playerArea.y})
                 }
             }
 
             function damaging()
             {
                 playerArea.health -= 25;
+            }
+
+            function changeDirectionRight()
+            {
+                playerArea.direction = 700;
+                playerArea.deltaX = 50;
+            }
+
+            function changeDirectionLeft()
+            {
+                playerArea.direction = -700;
+                playerArea.deltaX = -77;
             }
 
             function scoring()
