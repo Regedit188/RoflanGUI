@@ -5,7 +5,7 @@ Rectangle {
     width: 20
     height: 10
     color: "transparent"
-    property real direction: 700;
+    property real direction: playerArea.direction;
     NumberAnimation on x {
         from: x
         to: bullet.direction
