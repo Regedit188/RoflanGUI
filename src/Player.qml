@@ -25,6 +25,7 @@ Rectangle {
     property bool runningLeft: false;
     property bool pressedRight: false;
     property bool pressedLeft: false;
+    property bool onPlat: false;
     property var componentBullet: Qt.createComponent("Bullet.qml");
     property var componentPlayer: Qt.createComponent("Player.qml");
     //property var componentElements: Qt.createComponent("Elemets.qml");
@@ -70,9 +71,23 @@ Rectangle {
                 }
         }
 
+        function isOnPlatform(){
+            for (var i = 0; i < platformList.length; i++){
+                var pl = platformList[i]
+                if (root.y != 375){
+                    if (root.x > pl.x && root.x < pl.x+pl.width){
 
+                    }
+                    else {
+                        jump_timer.running = true;
+                    }
+                }
+
+            }
+        }
 
         onTriggered: {
+            isOnPlatform();
             if(xVelocity > xVelocityMax)
             {
                xVelocity = xVelocityMax;
@@ -111,14 +126,31 @@ Rectangle {
         property real g: -9.8;
         property real dt: interval/100;
 
+        function isOnPlatform(){
+            for (var i = 0; i < platformList.length; i++){
+                var pl = platformList[i]
+                if (root.x > pl.x && root.x < pl.x+pl.width){
 
+                    if (root.y > pl.y-pl.height){
+                        yPMaxT = pl.y-pl.height;
+
+                    }
+                }
+                else {
+
+                    yPMaxT = 375;
+                }
+            }
+        }
 
         onTriggered: {
 
+            isOnPlatform();
             if(point.pressedRight == true)
             {
                 root.x += 2;
                 changeR()
+
             }
 
             if(point.pressedLeft == true)
@@ -132,23 +164,16 @@ Rectangle {
                 yVelocity = 50;
                 yAcceleration = g;
             }
+
+
             root.y -= yVelocity*dt + 0.5*yAcceleration*dt*dt;
             yVelocity += yAcceleration*dt;
-
             if(root.y > yPMaxT)
             {
                 root.y  = yPMaxT;
                 running = false;
             }
-            for (var i = 0; i < platformList.length; i++){
-                var pl = platformList[i]
-                if (root.x > pl.x && root.x < pl.x+pl.width){
 
-                    if (root.y > pl.y-pl.height){
-                        root.y = pl.y-pl.height;
-                    }
-                }
-            }
         }
     }
 
@@ -187,8 +212,12 @@ Rectangle {
     }
     function playerJump()
     {
+
+
         if(!jumping)
         {
+
+
             jumping = true;
             jump_timer.running = true;
             playerTexture.source = "qrc:/Cowboy/jump/jump.png";
@@ -198,8 +227,9 @@ Rectangle {
         {
             jumping = false;
             playerTexture.source = "qrc:/Cowboy/stand/stand.png";
-            root.y = yPMax;
         }
+
+
 
     }
 
