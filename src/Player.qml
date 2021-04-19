@@ -70,6 +70,8 @@ Rectangle {
                 }
         }
 
+
+
         onTriggered: {
             if(xVelocity > xVelocityMax)
             {
@@ -110,7 +112,9 @@ Rectangle {
         property real dt: interval/100;
 
 
+
         onTriggered: {
+
             if(point.pressedRight == true)
             {
                 root.x += 2;
@@ -130,10 +134,20 @@ Rectangle {
             }
             root.y -= yVelocity*dt + 0.5*yAcceleration*dt*dt;
             yVelocity += yAcceleration*dt;
+
             if(root.y > yPMaxT)
             {
                 root.y  = yPMaxT;
                 running = false;
+            }
+            for (var i = 0; i < platformList.length; i++){
+                var pl = platformList[i]
+                if (root.x > pl.x && root.x < pl.x+pl.width){
+
+                    if (root.y > pl.y-pl.height){
+                        root.y = pl.y-pl.height;
+                    }
+                }
             }
         }
     }
@@ -171,7 +185,6 @@ Rectangle {
             runFrame = 0;
         }
     }
-
     function playerJump()
     {
         if(!jumping)
@@ -202,6 +215,7 @@ Rectangle {
         gameInfo.text = "\nCHECK: "
         playerTexture.source = "qrc:/Cowboy/lose/lose.png";
     }
+
 
     Keys.onPressed: {
         switch(event.key) {
@@ -257,5 +271,7 @@ Rectangle {
         }
     }
 
+
     focus: true;
 }}
+
