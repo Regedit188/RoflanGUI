@@ -130,6 +130,7 @@ Window {
     }
 
     function restart(){
+        if(playerArea.isAlive==false){
             playerArea.isAlive = true;
             playerArea.health = 100;
             playerArea.score = 0;
@@ -138,6 +139,9 @@ Window {
             backgroundTexture.source = "qrc:/textures/background/4/background.png";
             backgroundTexture.z  = 0;
             createElement(310, 350);
+        } else {
+            return;
+        }
     }
 
     function clearElements()
