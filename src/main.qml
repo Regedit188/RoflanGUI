@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtGraphicalEffects 1.0
 
 Window {
     property var enemyList: []
@@ -7,21 +8,42 @@ Window {
     property var decorsList: []
     property var platformList: []
 
+
     id:root
     visible: true
     width: 790
     height: 480
     title: qsTr("Cowboys against the aliens")
 
-    Image {
-        id: backgroundTexture
-        source: "qrc:/textures/background/4/background.png"
-        mirror: false
+    Rectangle
+    {
         width: 640
         height: 480
-        z: 0
+        layer.enabled: true
+        Image {
+            id: backgroundTexture
+            source: "qrc:/textures/background/4/background.png"
+            mirror: false
+            width: 640
+            height: 480
+            clip: true
+            //fillMode: Image.TileHorizontally
+            z: 0
+            property int position: 0
+            x: -backgroundTexture.position * 10
+        }
+        Image {
+            id: backgroundTexture2
+            source: "qrc:/textures/background/4/background.png"
+            mirror: false
+            width: 640
+            height: 480
+            clip: true
+            z: 0
+            property int position: -64
+            x: -backgroundTexture2.position * 10
+        }
     }
-
     Text {
         id: gameInfo
         text: qsTr("Health: 100")
@@ -161,7 +183,7 @@ Window {
         x:40
         y:375
         z:9
-        property var health: 100;
+        property var health: 1000;
         property var score: 0;
         property var isAlive: true;
         property var direction: 700;
@@ -235,6 +257,20 @@ Window {
                 playerArea.direction = 700;
                 playerArea.deltaX = 50;
                 playerArea.bulletMirrored = false;
+                backgroundTexture.position++;
+                backgroundTexture2.position++;
+                console.log("1:"+backgroundTexture.position);
+                console.log("2:"+backgroundTexture2.position);
+
+                if(backgroundTexture.position >= 64)
+                {
+                    backgroundTexture.position = -64;
+                }
+
+                if(backgroundTexture2.position >= 64)
+                {
+                    backgroundTexture2.position = -64;
+                }
             }
 
             function changeDirectionLeft()
@@ -242,6 +278,20 @@ Window {
                 playerArea.direction = -700;
                 playerArea.deltaX = -77;
                 playerArea.bulletMirrored = true;
+                backgroundTexture.position--;
+                backgroundTexture2.position--;
+                console.log("1:"+backgroundTexture.position);
+                console.log("2:"+backgroundTexture2.position);
+
+                if(backgroundTexture.position <= -64)
+                {
+                    backgroundTexture.position = 64;
+                }
+
+                if(backgroundTexture2.position <= -64)
+                {
+                    backgroundTexture2.position = 64;
+                }
             }
 
             function scoring()
