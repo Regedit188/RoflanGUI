@@ -251,6 +251,13 @@ Window {
 
         onScoreChanged:
         {
+            if(playerArea.score >= 20){
+                playerArea.isAlive = false;
+                backgroundTexture.source = "qrc:/Cowboy/win/win.png";
+                backgroundTexture.z  = 20;
+                backgroundTexture.x = 0;
+            }
+
             gameInfo.text = "Health: "+ playerArea.health;
             scoreInfo.text = "Score: "+ playerArea.score;
         }
