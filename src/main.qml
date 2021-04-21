@@ -14,7 +14,6 @@ Window {
     width: 790
     height: 480
     title: qsTr("Cowboys against the aliens")
-
     Rectangle
     {
         id: images
@@ -54,18 +53,25 @@ Window {
 
         }
     }
-    Text {
-        id: gameInfo
-        text: qsTr("Health: 100")
-        leftPadding: 700
-        topPadding: 50
-    }
+    Rectangle
+    {
+        width:150
+        height:480
+        x:640
+        z:25;
+        Text {
+            id: gameInfo
+            text: qsTr("Health: 100")
+            leftPadding: 20
+            topPadding: 50
+        }
 
-    Text {
-        id: scoreInfo
-        text: qsTr("Score: 0")
-        leftPadding: 700
-        topPadding: 60
+        Text {
+            id: scoreInfo
+            text: qsTr("Score: 0")
+            leftPadding: 20
+            topPadding: 60
+        }
     }
 
 
@@ -165,8 +171,9 @@ Window {
             playerArea.isAlive = true;
             playerArea.health = 100;
             playerArea.score = 0;
-            playerArea.x = 40;
+            playerArea.x = 300;
             playerArea.y = 375;
+            playerArea.winFlag = false;
             //clearElements();
             createElement(310, 350);
             backgroundWinLose.z=0;
@@ -216,9 +223,9 @@ Window {
 
     Player{
         id: playerArea
-        x:40
+        x:300
         y:375
-        z:0
+        z:10
         property var health: 100;
         property var score: 0;
         property var isAlive: true;
@@ -226,6 +233,7 @@ Window {
         property var deltaX: 50;
         property var bulletMirrored: false;
         property var platformDirection: 0
+        property var winFlag: false
 
         onPlatformDirectionChanged:
         {
@@ -261,10 +269,10 @@ Window {
 
         onScoreChanged:
         {
-            if(playerArea.score >= 20){
+            if(playerArea.score >= 200){
                 playerArea.isAlive = false;
                 backgroundWinLose.source = "qrc:/Cowboy/win/win.png";
-                backgroundWinLose.z  = 20;
+                backgroundWinLose.z  = 20;playerArea.winFlag = true;
             }
 
             gameInfo.text = "Health: "+ playerArea.health;
