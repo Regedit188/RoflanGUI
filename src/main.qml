@@ -223,6 +223,10 @@ Window {
             {
                 var en = platformList[i];
                 en.x += playerArea.platformDirection;
+                if(en.x <= -640)
+                {
+                    en.x = 1280;
+                }
             }
 
             for (var i = 0; i < decorsList.length; i++)
