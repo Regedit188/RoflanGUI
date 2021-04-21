@@ -17,6 +17,8 @@ Window {
 
     Rectangle
     {
+        id: images
+        z:0
         width: 640
         height: 480
         layer.enabled: true
@@ -42,6 +44,14 @@ Window {
             z: 0
             property int position: -64
             x: -backgroundTexture2.position * 10
+        }
+        Image {
+            id: backgroundWinLose
+            width: 640
+            height: 480
+            clip: true
+            z:0
+
         }
     }
     Text {
@@ -89,7 +99,7 @@ Window {
                height: 40;
                radius: 5;
                color: "lightgray"
-               z:11;
+               z:12;
                
                Text { 
                    anchors.centerIn: buttonQuit;
@@ -113,7 +123,7 @@ Window {
                radius: 5;
                color: "lightgray"
 
-               z:11;
+               z:12;
 
                Text {
                    anchors.centerIn: buttonRestart;
@@ -152,18 +162,18 @@ Window {
     }
 
     function restart(){
-        if(playerArea.isAlive==false){
             playerArea.isAlive = true;
             playerArea.health = 100;
             playerArea.score = 0;
             playerArea.x = 40;
             playerArea.y = 375;
-            backgroundTexture.source = "qrc:/textures/background/4/background.png";
-            backgroundTexture.z  = 0;
+            //clearElements();
             createElement(310, 350);
-        } else {
-            return;
-        }
+            backgroundWinLose.z=0;
+            backgroundTexture.z=1;
+            backgroundTexture2.z=1;
+            enemy_timer.running = true;
+            images.z  = 0;
     }
 
     function clearElements()
@@ -188,8 +198,8 @@ Window {
     {
         for (var i = 0; i < decorsList.length; i++)
         {
-            var en = decorsList[i]
-            en.destroy()
+            var en = decorsList[i];
+            en.destroy();
         }
     }
 
@@ -197,8 +207,8 @@ Window {
     {
         for (var i = 0; i < enemyList.length; i++)
         {
-            var en = enemyList[i]
-            en.destroy()
+            var en = enemyList[i];
+            en.destroy();
         }
     }
 
@@ -208,8 +218,8 @@ Window {
         id: playerArea
         x:40
         y:375
-        z:9
-        property var health: 1000;
+        z:0
+        property var health: 100;
         property var score: 0;
         property var isAlive: true;
         property var direction: 700;
@@ -253,9 +263,8 @@ Window {
         {
             if(playerArea.score >= 20){
                 playerArea.isAlive = false;
-                backgroundTexture.source = "qrc:/Cowboy/win/win.png";
-                backgroundTexture.z  = 20;
-                backgroundTexture.x = 0;
+                backgroundWinLose.source = "qrc:/Cowboy/win/win.png";
+                backgroundWinLose.z  = 20;
             }
 
             gameInfo.text = "Health: "+ playerArea.health;
@@ -268,8 +277,11 @@ Window {
             if(playerArea.health <= 0)
             {
                 playerArea.isAlive = false;
-                backgroundTexture.source = "qrc:/Cowboy/lose/loseScreen.png";
-                backgroundTexture.z  = 10;
+                backgroundWinLose.source = "qrc:/Cowboy/lose/loseScreen.png";
+                backgroundWinLose.z = 2;
+                images.z  = 11;
+                enemy_timer.running = false;
+                clearEnemy();
 
 
                 //playerArea.destroy();
@@ -310,7 +322,7 @@ Window {
                 //createDecors(520, 220);
 
                 createPlatform(110, 320);
-                createPlatform(310, 120);
+                //createPlatform(310, 120);
             }
 
             function shoot(){

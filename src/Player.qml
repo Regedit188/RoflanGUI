@@ -10,7 +10,7 @@ signal changeR()
 signal changeL()
 property alias color :point.color
 Rectangle {
-
+    z:0
     id:point
     anchors.centerIn: parent
     width: 80
