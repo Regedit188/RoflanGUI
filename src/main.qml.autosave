@@ -275,7 +275,7 @@ Window {
                 //createDecors(520, 220);
 
                 createPlatform(110, 320);
-                createPlatform(310, 120);
+                //createPlatform(310, 120);
             }
 
             function shoot(){
