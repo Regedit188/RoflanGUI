@@ -219,12 +219,30 @@ Window {
 
         onPlatformDirectionChanged:
         {
-            console.log(playerArea.platformDirection)
             for (var i = 0; i < platformList.length; i++)
             {
                 var en = platformList[i];
                 en.x += playerArea.platformDirection;
             }
+
+            for (var i = 0; i < decorsList.length; i++)
+            {
+                var en = decorsList[i];
+                en.x += playerArea.platformDirection;elementsList
+            }
+
+            for (var i = 0; i < elementsList.length; i++)
+            {
+                var en = elementsList[i];
+                en.x += playerArea.platformDirection;
+            }
+
+            for (var i = 0; i < enemyList.length; i++)
+            {
+                var en = enemyList[i];
+                en.x += playerArea.platformDirection;
+            }
+
         }
 
         onHealthChanged:

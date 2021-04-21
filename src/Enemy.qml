@@ -9,7 +9,7 @@ Rectangle {
         from: x
         to: -80
         duration: 1000
-        running: true
+        running: false
     }
 
     onXChanged:
