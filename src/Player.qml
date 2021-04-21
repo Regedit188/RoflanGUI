@@ -103,13 +103,25 @@ Rectangle {
 
             if(point.pressedRight == true)
             {
-                root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
-                playerArea.platformDirection = -xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                if(playerArea.winFlag)
+                {
+                    root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                }
+                else
+                {
+                    playerArea.platformDirection = -xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                }
             }
             else if(point.pressedLeft == true)
             {
-                root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
-                playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                if(playerArea.winFlag)
+                {
+                    root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                }
+                else
+                {
+                    playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                }
             }
             xVelocity += xAcceleration*dt;
             checkHeal();
@@ -151,16 +163,28 @@ Rectangle {
             isOnPlatform();
             if(point.pressedRight == true)
             {
-                root.x += 2;
-                playerArea.platformDirection = -2
+                if(playerArea.winFlag)
+                {
+                    root.x += 2;
+                }
+                else
+                {
+                    playerArea.platformDirection = -2
+                }
                 changeR()
 
             }
 
             if(point.pressedLeft == true)
             {
-                root.x -= 2;
-                playerArea.platformDirection = 2
+                if(playerArea.winFlag)
+                {
+                    root.x -= 2;
+                }
+                else
+                {
+                    playerArea.platformDirection = 2;
+                }
                 changeL();
             }
 
