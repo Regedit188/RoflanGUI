@@ -10,7 +10,7 @@ signal changeR()
 signal changeL()
 property alias color :point.color
 Rectangle {
-
+    z:0
     id:point
     anchors.centerIn: parent
     width: 80
@@ -108,7 +108,7 @@ Rectangle {
             else if(point.pressedLeft == true)
             {
                 root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
-                playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt);
+                playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt;
             }
             xVelocity += xAcceleration*dt;
             checkHeal();
