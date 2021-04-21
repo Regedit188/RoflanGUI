@@ -5,7 +5,6 @@ id: root
 
 signal dragged()
 signal shot()
-signal heal()
 property alias color :point.color
 Rectangle {
 
@@ -13,13 +12,13 @@ Rectangle {
     anchors.centerIn: parent
     width: 80
     height: 110
+    color: "blue"
     opacity: 0.8
-    color: "transparent"
+
     property real yPMin: 250;
     property real yPMax: 375;
     property real runFrame: 0;
     property bool jumping: false;
-    property bool shooting: false;
     property bool runningRight: false;
     property bool runningLeft: false;
     property bool pressedRight: false;
@@ -41,59 +40,6 @@ Rectangle {
         id: playerTexture
         source: "qrc:/Cowboy/stand/stand.png"
         mirror: false
-    }
-
-    Timer{
-        id: run_timer
-        interval: 10
-        running: false
-        repeat: true
-
-        property real yPMaxT: 375;
-        property real xVelocity: 20;
-        property real xVelocityMax: 100;
-        property real xAcceleration: 2.8;
-        property real g: -9.8;
-        property real dt: interval/100;
-
-        function  checkHeal()
-        {
-            for (var i = 0; i < elementsList.length; i++){
-                var en = elementsList[i]
-                    if (root.x > en.x){
-                        if(root.y > en.y){
-                            en.destroy()
-                            heal();
-                        }
-                    }
-                }
-        }
-
-        onTriggered: {
-            if(xVelocity > xVelocityMax)
-            {
-               xVelocity = xVelocityMax;
-            }
-
-            if(point.pressedRight == false && point.pressedLeft == false)
-            {
-                //playerTexture.source = "qrc:/Cowboy/stand/stand.png";
-                xVelocity = 20;
-                running: false;
-            }
-
-            if(point.pressedRight == true)
-            {
-                root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
-            }
-            else if(point.pressedLeft == true)
-            {
-                root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
-            }
-            xVelocity += xAcceleration*dt;
-            checkHeal();
-
-        }
     }
 
     Timer{
@@ -136,12 +82,55 @@ Rectangle {
     }
 
     Timer{
-        id: shoot_timer
-        interval: 500
+        id: run_timer
+        interval: 10
         running: false
         repeat: true
+
+        property real yPMaxT: 375;
+        property real xVelocity: 20;
+        property real xVelocityMax: 100;
+        property real xAcceleration: 2.8;
+        property real g: -9.8;
+        property real dt: interval/100;
+
+        function  checkHeal()
+        {
+            for (var i = 0; i < elementsList.length; i++){
+                var en = elementsList[i]
+                    if (root.x > en.x){
+                        if(root.y > en.y){
+                            en.destroy()
+                            //playerArea.score += 10;
+                        }
+                    }
+                }
+        }
+
         onTriggered: {
-            running = false;
+            if(xVelocity > xVelocityMax)
+            {
+               xVelocity = xVelocityMax;
+            }
+
+            if(point.pressedRight == false && point.pressedLeft == false)
+            {
+                //playerTexture.source = "qrc:/Cowboy/stand/stand.png";
+                xVelocity = 20;
+                running: false;
+            }
+
+            if(point.pressedRight == true)
+            {
+                root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
+            }
+            else if(point.pressedLeft == true)
+            {
+                root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
+            }
+            xVelocity += xAcceleration*dt;
+            checkHeal();
+
         }
     }
 
@@ -241,17 +230,9 @@ Rectangle {
             break;
         case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
-            var right = - 700;
-            if (component.status === Component.Ready && !shooting){
-                shooting = true;
-                shoot_timer.start();
-                right = (playerTexture.mirror == true) ? -700 : 700;
-                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y, direction: right})
+            if (component.status === Component.Ready){
+                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 shot();
-            }
-            if(shoot_timer.running == false)
-            {
-                shooting = false;
             }
             break;
         }

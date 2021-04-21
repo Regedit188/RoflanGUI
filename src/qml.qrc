@@ -7,6 +7,5 @@
         <file>Enemy.qml</file>
         <file>Elements.qml</file>
         <file>Decors.qml</file>
-        <file>Platform.qml</file>
     </qresource>
 </RCC>

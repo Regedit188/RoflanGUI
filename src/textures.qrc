@@ -22,7 +22,5 @@
         <file>textures/elements/bonus3.png</file>
         <file>textures/elements/bonus4.png</file>
         <file>Cowboy/lose/loseScreen.png</file>
-        <file>textures/background/4/platform4.png</file>
-        <file>textures/background/background2E.jpg</file>
     </qresource>
 </RCC>

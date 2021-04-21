@@ -5,7 +5,7 @@ Rectangle {
     width: 20
     height: 10
     color: "transparent"
-    property real direction: playerArea.direction;
+    property real direction: 700;
     NumberAnimation on x {
         from: x
         to: bullet.direction
@@ -15,7 +15,6 @@ Rectangle {
 
     Image {
         source: "qrc:/Cowboy/bullet/bullet.png"
-        mirror: playerArea.bulletMirrored
     }
 
     onXChanged: {
