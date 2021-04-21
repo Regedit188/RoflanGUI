@@ -24,5 +24,6 @@
         <file>Cowboy/lose/loseScreen.png</file>
         <file>textures/background/4/platform4.png</file>
         <file>textures/background/background2E.jpg</file>
+        <file>Cowboy/win/win.png</file>
     </qresource>
 </RCC>
