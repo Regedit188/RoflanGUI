@@ -219,47 +219,12 @@ Window {
 
         onPlatformDirectionChanged:
         {
+            console.log(playerArea.platformDirection)
             for (var i = 0; i < platformList.length; i++)
             {
                 var en = platformList[i];
                 en.x += playerArea.platformDirection;
-                if(en.x <= -640)
-                {
-                    en.x = 1280;
-                }
             }
-
-            for (var i = 0; i < decorsList.length; i++)
-            {
-                var en = decorsList[i];
-                en.x += playerArea.platformDirection;elementsList
-            }
-
-            for (var i = 0; i < elementsList.length; i++)
-            {
-                var en = elementsList[i];
-                en.x += playerArea.platformDirection;
-            }
-
-            for (var i = 0; i < enemyList.length; i++)
-            {
-                var en = enemyList[i];
-                en.x += playerArea.platformDirection;
-            }
-
-        }
-
-        onScoreChanged:
-        {
-            if(playerArea.score >= 20){
-                playerArea.isAlive = false;
-                backgroundTexture.source = "qrc:/Cowboy/win/win.png";
-                backgroundTexture.z  = 20;
-                backgroundTexture.x = 0;
-            }
-
-            gameInfo.text = "Health: "+ playerArea.health;
-            scoreInfo.text = "Score: "+ playerArea.score;
         }
 
         onHealthChanged:

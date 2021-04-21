@@ -76,7 +76,7 @@ Rectangle {
                 var pl = platformList[i]
                 if (root.y != 375){
                     if (root.x > pl.x && root.x < pl.x+pl.width){
-                        
+
                     }
                     else {
                         jump_timer.running = true;
@@ -108,7 +108,7 @@ Rectangle {
             else if(point.pressedLeft == true)
             {
                 root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
-                playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt);
+                playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt;
             }
             xVelocity += xAcceleration*dt;
             checkHeal();

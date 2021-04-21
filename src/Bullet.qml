@@ -24,7 +24,7 @@ Rectangle {
         }
         for (var i = 0; i < enemyList.length; i++){
             var en = enemyList[i]
-                if (bullet.x > en.x && bullet.x < en.x + en.width){
+                if (bullet.x > en.x){
                     if(bullet.y > en.y){
                         en.destroy()
                         playerArea.score += 10;
