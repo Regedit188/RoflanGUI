@@ -9,12 +9,12 @@ Rectangle {
         from: x
         to: -80
         duration: 1000
-        running: true
+        running: false
     }
 
     onXChanged:
     {
-        if (playerArea.x > enemy.x){
+        if (playerArea.x > enemy.x && playerArea.x < enemy.x + enemy.width){
             if(playerArea.y > enemy.y){
                 enemy.destroy();
                 playerArea.health -= 25;

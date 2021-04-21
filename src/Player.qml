@@ -6,6 +6,8 @@ id: root
 signal dragged()
 signal shot()
 signal heal()
+signal changeR()
+signal changeL()
 property alias color :point.color
 Rectangle {
 
@@ -18,12 +20,13 @@ Rectangle {
     property real yPMin: 250;
     property real yPMax: 375;
     property real runFrame: 0;
-    property bool jumping: false;
     property bool shooting: false;
+    property bool jumping: false;
     property bool runningRight: false;
     property bool runningLeft: false;
     property bool pressedRight: false;
     property bool pressedLeft: false;
+    property bool onPlat: false;
     property var componentBullet: Qt.createComponent("Bullet.qml");
     property var componentPlayer: Qt.createComponent("Player.qml");
     //property var componentElements: Qt.createComponent("Elemets.qml");
@@ -69,7 +72,23 @@ Rectangle {
                 }
         }
 
+        function isOnPlatform(){
+            for (var i = 0; i < platformList.length; i++){
+                var pl = platformList[i]
+                if (root.y != 375){
+                    if (root.x > pl.x && root.x < pl.x+pl.width){
+                        
+                    }
+                    else {
+                        jump_timer.running = true;
+                    }
+                }
+
+            }
+        }
+
         onTriggered: {
+            isOnPlatform();
             if(xVelocity > xVelocityMax)
             {
                xVelocity = xVelocityMax;
@@ -85,10 +104,12 @@ Rectangle {
             if(point.pressedRight == true)
             {
                 root.x += xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                playerArea.platformDirection = -xVelocity*dt + 0.5*xAcceleration*dt*dt;
             }
             else if(point.pressedLeft == true)
             {
                 root.x -= xVelocity*dt + 0.5*xAcceleration*dt*dt;
+                playerArea.platformDirection = xVelocity*dt + 0.5*xAcceleration*dt*dt;
             }
             xVelocity += xAcceleration*dt;
             checkHeal();
@@ -108,16 +129,39 @@ Rectangle {
         property real g: -9.8;
         property real dt: interval/100;
 
+        function isOnPlatform(){
+            for (var i = 0; i < platformList.length; i++){
+                var pl = platformList[i]
+                if (root.x > pl.x && root.x < pl.x+pl.width){
+
+                    if (root.y > pl.y-pl.height){
+                        yPMaxT = pl.y-pl.height;
+
+                    }
+                }
+                else {
+
+                    yPMaxT = 375;
+                }
+            }
+        }
 
         onTriggered: {
+
+            isOnPlatform();
             if(point.pressedRight == true)
             {
                 root.x += 2;
+                playerArea.platformDirection = -2
+                changeR()
+
             }
 
             if(point.pressedLeft == true)
             {
                 root.x -= 2;
+                playerArea.platformDirection = 2
+                changeL();
             }
 
             if(root.y == yPMaxT)//on ground
@@ -125,6 +169,8 @@ Rectangle {
                 yVelocity = 50;
                 yAcceleration = g;
             }
+
+
             root.y -= yVelocity*dt + 0.5*yAcceleration*dt*dt;
             yVelocity += yAcceleration*dt;
             if(root.y > yPMaxT)
@@ -132,17 +178,18 @@ Rectangle {
                 root.y  = yPMaxT;
                 running = false;
             }
+
         }
     }
 
     Timer{
-        id: shoot_timer
-        interval: 500
-        running: false
-        repeat: true
-        onTriggered: {
-            running = false;
-        }
+            id: shoot_timer
+            interval: 500
+            running: false
+            repeat: true
+            onTriggered: {
+                running = false;
+            }
     }
 
     MouseArea {
@@ -178,11 +225,14 @@ Rectangle {
             runFrame = 0;
         }
     }
-
     function playerJump()
     {
+
+
         if(!jumping)
         {
+
+
             jumping = true;
             jump_timer.running = true;
             playerTexture.source = "qrc:/Cowboy/jump/jump.png";
@@ -192,8 +242,9 @@ Rectangle {
         {
             jumping = false;
             playerTexture.source = "qrc:/Cowboy/stand/stand.png";
-            root.y = yPMax;
         }
+
+
 
     }
 
@@ -210,6 +261,7 @@ Rectangle {
         playerTexture.source = "qrc:/Cowboy/lose/lose.png";
     }
 
+
     Keys.onPressed: {
         switch(event.key) {
         case Qt.Key_Left:
@@ -220,6 +272,7 @@ Rectangle {
                 changeRunRightFrame();
                 playerRun();
                 dragged();
+                changeL();
             }
 
 
@@ -232,6 +285,7 @@ Rectangle {
                 changeRunRightFrame();
                 playerRun();
                 dragged();
+                changeR();
             }
             break;
         case Qt.Key_Up:
@@ -241,12 +295,10 @@ Rectangle {
             break;
         case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
-            var right = - 700;
             if (component.status === Component.Ready && !shooting){
                 shooting = true;
                 shoot_timer.start();
-                right = (playerTexture.mirror == true) ? -700 : 700;
-                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y, direction: right})
+                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 shot();
             }
             if(shoot_timer.running == false)
@@ -269,5 +321,7 @@ Rectangle {
         }
     }
 
+
     focus: true;
 }}
+
