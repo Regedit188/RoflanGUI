@@ -245,6 +245,12 @@ Window {
 
         }
 
+        onScoreChanged:
+        {
+            gameInfo.text = "Health: "+ playerArea.health;
+            scoreInfo.text = "Score: "+ playerArea.score;
+        }
+
         onHealthChanged:
         {
 
