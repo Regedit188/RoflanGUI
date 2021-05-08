@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
+import QtMultimedia 5.15
+
 
 Window {
     property var enemyList: []
@@ -14,6 +16,12 @@ Window {
     width: 790
     height: 480
     title: qsTr("Cowboys against the aliens")
+    Audio {
+            id: playMainTheme
+            source: "qrc:/sounds/mainTheme.mp3"
+            autoLoad: true
+            autoPlay: true
+    }
     Rectangle
     {
         id: images
@@ -21,6 +29,7 @@ Window {
         width: 640
         height: 480
         layer.enabled: true
+
         Image {
             id: backgroundTexture
             source: "qrc:/textures/background/4/background.png"
@@ -50,8 +59,9 @@ Window {
             height: 480
             clip: true
             z:0
-
         }
+
+
     }
     Rectangle
     {
