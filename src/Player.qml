@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.15
 
 Item {
 id: root
@@ -46,6 +47,23 @@ Rectangle {
         mirror: false
     }
 
+    Audio {
+            id: playJump
+            source: "qrc:/sounds/jump.mp3"
+            volume: 1.0
+            autoLoad: true
+            autoPlay: false
+    }
+
+    Audio {
+            id: playHeal
+            source: "qrc:/sounds/heal.mp3"
+            volume: 1.0
+            autoLoad: true
+            autoPlay: false
+    }
+
+
     Timer{
         id: run_timer
         interval: 10
@@ -66,7 +84,9 @@ Rectangle {
                     if (root.x > en.x){
                         if(root.y > en.y){
                             en.destroy()
+                            playHeal.play();
                             heal();
+
                         }
                     }
                 }
@@ -256,9 +276,9 @@ Rectangle {
         if(!jumping)
         {
 
-
             jumping = true;
             jump_timer.running = true;
+            playJump.play();
             playerTexture.source = "qrc:/Cowboy/jump/jump.png";
 
         }
@@ -319,6 +339,7 @@ Rectangle {
             break;
         case Qt.Key_F:
             var component = Qt.createComponent("Bullet.qml")
+            //playBullet.play();
             if (component.status === Component.Ready && !shooting){
                 shooting = true;
                 shoot_timer.start();
