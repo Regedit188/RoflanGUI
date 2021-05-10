@@ -1,5 +1,4 @@
 import QtQuick 2.0
-import QtMultimedia 5.15
 
 Rectangle {
     id: bullet
@@ -17,14 +16,6 @@ Rectangle {
     Image {
         source: "qrc:/Cowboy/bullet/bullet.png"
         mirror: playerArea.bulletMirrored
-    }
-
-    Audio {
-            id: playBullet
-            source: "qrc:/sounds/shot.mp3"
-            volume: 1.0
-            autoLoad: true
-            autoPlay: true
     }
 
     onXChanged: {

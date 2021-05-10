@@ -1,8 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
-import QtMultimedia 5.15
-
 
 Window {
     property var enemyList: []
@@ -16,29 +14,6 @@ Window {
     width: 790
     height: 480
     title: qsTr("Cowboys against the aliens")
-    Audio {
-            id: playMainTheme
-            source: "qrc:/sounds/mainTheme.mp3"
-            autoLoad: true
-            autoPlay: true
-            volume: 0.5
-            loops: 25
-    }
-    Audio {
-            id: playDie
-            source: "qrc:/sounds/die.mp3"
-            volume: 1.0
-            autoLoad: true
-            autoPlay: false
-    }
-    Audio {
-            id: playWin
-            source: "qrc:/sounds/win.mp3"
-            volume: 1.0
-            autoLoad: true
-            autoPlay: false
-            loops: 2
-    }
     Rectangle
     {
         id: images
@@ -46,7 +21,6 @@ Window {
         width: 640
         height: 480
         layer.enabled: true
-
         Image {
             id: backgroundTexture
             source: "qrc:/textures/background/4/background.png"
@@ -76,9 +50,8 @@ Window {
             height: 480
             clip: true
             z:0
+
         }
-
-
     }
     Rectangle
     {
@@ -195,7 +168,6 @@ Window {
     }
 
     function restart(){
-            playMainTheme.play();
             playerArea.isAlive = true;
             playerArea.health = 100;
             playerArea.score = 0;
@@ -299,11 +271,8 @@ Window {
         {
             if(playerArea.score >= 200){
                 playerArea.isAlive = false;
-                playMainTheme.stop();
                 backgroundWinLose.source = "qrc:/Cowboy/win/win.png";
-                playWin.play();
-                backgroundWinLose.z  = 20;
-                playerArea.winFlag = true;
+                backgroundWinLose.z  = 20;playerArea.winFlag = true;
             }
 
             gameInfo.text = "Health: "+ playerArea.health;
@@ -315,9 +284,6 @@ Window {
 
             if(playerArea.health <= 0)
             {
-                playMainTheme.stop();
-                playDie.play();
-
                 playerArea.isAlive = false;
                 backgroundWinLose.source = "qrc:/Cowboy/lose/loseScreen.png";
                 backgroundWinLose.z = 2;
