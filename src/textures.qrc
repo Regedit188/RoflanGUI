@@ -25,5 +25,7 @@
         <file>textures/background/4/platform4.png</file>
         <file>textures/background/background2E.jpg</file>
         <file>Cowboy/win/win.png</file>
+        <file>textures/boss/fire.png</file>
+        <file>textures/boss/predator.png</file>
     </qresource>
 </RCC>
