@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/">
+        <file>sounds/die.mp3</file>
+        <file>sounds/heal.mp3</file>
+        <file>sounds/jump.mp3</file>
         <file>sounds/mainTheme.mp3</file>
         <file>sounds/shot.mp3</file>
-        <file>sounds/die.mp3</file>
-        <file>sounds/jump.mp3</file>
-        <file>sounds/heal.mp3</file>
         <file>sounds/win.mp3</file>
     </qresource>
 </RCC>
