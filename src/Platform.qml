@@ -13,7 +13,4 @@ Rectangle {
         height: 46
     }
 
-
-
-
 }
