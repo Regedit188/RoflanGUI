@@ -1,5 +1,6 @@
 import QtQuick 2.0
-import QtMultimedia 5.15
+import QtMultimedia 5.12
+import QtQml 2.12
 
 Item {
 id: root
@@ -338,12 +339,10 @@ Rectangle {
             dragged();
             break;
         case Qt.Key_F:
-            var component = Qt.createComponent("Bullet.qml")
             //playBullet.play();
-            if (component.status === Component.Ready && !shooting){
+            if (!shooting){
                 shooting = true;
                 shoot_timer.start();
-                component.createObject(root, {"x":playerArea.x+77, "y":playerArea.y})
                 shot();
             }
             if(shoot_timer.running == false)

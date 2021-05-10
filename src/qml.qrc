@@ -8,5 +8,7 @@
         <file>Elements.qml</file>
         <file>Decors.qml</file>
         <file>Platform.qml</file>
+        <file>Boss.qml</file>
+        <file>BossBullet.qml</file>
     </qresource>
 </RCC>

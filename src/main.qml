@@ -1,7 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
-import QtMultimedia 5.15
+import QtMultimedia 5.12
+import QtQml 2.12
 
 
 Window {
@@ -201,6 +202,7 @@ Window {
             backgroundTexture2.z=1;
             enemy_timer.running = true;
             images.z  = 0;
+            playerArea.boss = false;
     }
 
     function clearElements()
@@ -252,6 +254,20 @@ Window {
         property var bulletMirrored: false;
         property var platformDirection: 0
         property var winFlag: false
+        property var boss: false
+        property var bossDefeat: false
+        property var bossX:playerArea.x+ 100 + playerArea.deltaX
+        property var bossY: playerArea.y
+        property var bossHealth: 100
+
+        onBossHealthChanged:
+        {
+            if(bossHealth <= 0 )
+            {
+                playerArea.bossDefeat = true
+                playerArea.score += 100
+            }
+        }
 
         onPlatformDirectionChanged:
         {
@@ -287,7 +303,16 @@ Window {
 
         onScoreChanged:
         {
-            if(playerArea.score >= 200){
+            if(playerArea.score >= 200 && playerArea.boss == false){
+                enemy_timer.running = false;
+                playerArea.boss = true;
+                var component = Qt.createComponent("qrc:/Boss.qml")
+                if (component.status === Component.Ready){
+                    component.createObject(root, {"x":playerArea.x+ 100 + playerArea.deltaX, "y":playerArea.y})
+                }
+            }
+            else if(playerArea.bossDefeat == true)
+            {
                 playerArea.isAlive = false;
                 playMainTheme.stop();
                 backgroundWinLose.source = "qrc:/Cowboy/win/win.png";
@@ -357,7 +382,7 @@ Window {
             }
 
             function shoot(){
-                var component = Qt.createComponent("Bullet.qml")
+                var component = Qt.createComponent("qrc:/Bullet.qml")
                 if (component.status === Component.Ready){
                     component.createObject(root, {"x":playerArea.x+playerArea.deltaX, "y":playerArea.y})
                 }
