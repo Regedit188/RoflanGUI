@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtMultimedia 5.15
+import QtMultimedia 5.12
 
 Rectangle {
     id: bullet
@@ -31,12 +31,22 @@ Rectangle {
         if (x > 640){
             destroy()
         }
+
+        if (bullet.x > playerArea.bossX && bullet.x < playerArea.bossX + 68)
+        {
+            if(bullet.y > playerArea.bossY)
+            {
+                playerArea.bossHealth -= 50;
+                bullet.destroy()
+            }
+        }
+
         for (var i = 0; i < enemyList.length; i++){
             var en = enemyList[i]
                 if (bullet.x > en.x && bullet.x < en.x + en.width){
                     if(bullet.y > en.y){
                         en.destroy()
-                        playerArea.score += 10;
+                        playerArea.score += 50;
                         bullet.destroy()
                     }
                 }
