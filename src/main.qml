@@ -10,7 +10,6 @@ Window {
     property var decorsList: []
     property var platformList: []
 
-
     id:root
     visible: true
     width: 790
@@ -77,8 +76,6 @@ Window {
             clip: true
             z:0
         }
-
-
     }
     Rectangle
     {
@@ -101,7 +98,6 @@ Window {
         }
     }
 
-
     Timer{
         id: enemy_timer
         interval: 1300
@@ -120,8 +116,6 @@ Window {
             }
         }
     }
-
-
 
     Rectangle {
                //anchors.centerIn: parent
@@ -173,8 +167,6 @@ Window {
                }
        }
            
-
-
     function createElement(x, y){
         var component = Qt.createComponent("Elements.qml")
         var e = component.createObject(root, {"x":x, "y":y})
@@ -246,8 +238,6 @@ Window {
             en.destroy();
         }
     }
-
-
 
     Player{
         id: playerArea
@@ -336,7 +326,6 @@ Window {
             scoreInfo.text = "Score: "+ playerArea.score;
         }
     }
-
 
     Rectangle{
         id: player
