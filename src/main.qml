@@ -39,6 +39,20 @@ Window {
             autoPlay: false
             loops: 2
     }
+    Audio {
+            id: playEnemySpawn
+            source: "qrc:/sounds/enemy_spawn.mp3"
+            volume: 1.0
+            autoLoad: true
+            autoPlay: false
+    }
+    Audio {
+            id: playBoss
+            source: "qrc:/sounds/bossPredator.mp3"
+            volume: 1.0
+            autoLoad: true
+            autoPlay: false
+    }
     Rectangle
     {
         id: images
@@ -111,6 +125,7 @@ Window {
 //            }
 
             var component = Qt.createComponent("Enemy.qml")
+            playEnemySpawn.play()
             if (component.status === Component.Ready && playerArea.isAlive){
                 var e = component.createObject(root, {"x":510, "y":350})
                 enemyList.push(e)
@@ -306,7 +321,9 @@ Window {
             if(playerArea.score >= 200 && playerArea.boss == false){
                 enemy_timer.running = false;
                 playerArea.boss = true;
+                playBoss.play();
                 var component = Qt.createComponent("qrc:/Boss.qml")
+
                 if (component.status === Component.Ready){
                     component.createObject(root, {"x":playerArea.x+ 100 + playerArea.deltaX, "y":playerArea.y})
                 }

@@ -6,5 +6,8 @@
         <file>sounds/mainTheme.mp3</file>
         <file>sounds/shot.mp3</file>
         <file>sounds/win.mp3</file>
+        <file>sounds/enemy_spawn.mp3</file>
+        <file>sounds/bossPredator.mp3</file>
+        <file>sounds/bossPredatorShot.mp3</file>
     </qresource>
 </RCC>

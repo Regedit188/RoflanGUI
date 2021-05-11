@@ -12,6 +12,13 @@ Rectangle {
         duration: 700
         running: true
     }
+    Audio {
+            id: playBullet
+            source: "qrc:/sounds/bossPredatorShot.mp3"
+            volume: 1.0
+            autoLoad: true
+            autoPlay: true
+    }
 
     Image {
         source: "qrc:/textures/boss/fire.png"
