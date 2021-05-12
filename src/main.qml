@@ -11,6 +11,7 @@ Window {
     property var decorsList: []
     property var platformList: []
     property var bossList
+    property var scoresForLVL: 200
 
     id:root
     visible: true
@@ -277,7 +278,7 @@ Window {
         playerArea.score += 100;
         bossHealthInfo.visible = false
         playerArea.bossHealth = 100;
-        clearPlatform();
+        //clearPlatform();
         //clearElements();
         //clearEnemy();
         //clearDecors();
@@ -285,11 +286,11 @@ Window {
         backgroundTexture.source = "qrc:/textures/background/1/background3.png";
         backgroundTexture2.source = "qrc:/textures/background/1/background3.png";
         createDecors(520, 375);
-        createPlatform(100, 320);
+        //createPlatform(100, 320);
         createElement(283, 350);
         createElement(293, 350);
         enemy_timer.running = true;
-
+        bossList.destroy()
     }
 
     Player{
@@ -319,7 +320,7 @@ Window {
                 playerArea.bossDefeat = true
                 playerArea.score += 100
                 bossHealthInfo.visible = false
-                bossList.destroy();
+                //bossList.destroy();
                 playBoss.stop();
                 newLVL();
             }
@@ -360,7 +361,8 @@ Window {
 
         onScoreChanged:
         {
-            if((playerArea.score >= 200 && playerArea.boss == false) || (playerArea.score >= 700 && playerArea.boss == false)){
+            if((playerArea.score >= scoresForLVL && playerArea.bossDefeat == false)){
+                scoresForLVL = 700
                 enemy_timer.running = false;
                 playerArea.boss = true;
                 playBoss.play();
@@ -371,6 +373,7 @@ Window {
             }
             else if(playerArea.bossDefeat == true && playerArea.score > 700)
             {
+                bossList.destroy()
                 playerArea.isAlive = false;
                 playMainTheme.stop();
                 backgroundWinLose.source = "qrc:/Cowboy/win/win.png";
