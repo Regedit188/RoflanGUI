@@ -43,14 +43,13 @@ Rectangle {
     Timer
     {
         id: boss_moving_timer
-        interval: 100
+        interval: 50
         running: true
         repeat: true
         property var up: true
 
         onTriggered:
         {
-            console.log(boss.y)
             if(boss.y < 50)
             {
                 up = true;
@@ -67,19 +66,17 @@ Rectangle {
                 playerArea.bossY = boss.y
                 if (boss.y > 375)
                 {
-                    console.log("here1")
                     boss.y = 375
                     up = false;
                 }
             }
             else
             {
-                playerArea.bossY = boss.y
                 boss.y-=4;
+                playerArea.bossY = boss.y
                 if (root.y < 50)
                 {
-                    console.log("here2")
-                    boss.y = 0
+                    boss.y = 50
                     up = true;
                 }
             }
