@@ -32,10 +32,12 @@ Rectangle {
         {
             destroy()
         }
+        console.log("1 " + playerArea.x + " < " + boss_bullet.x + " && " + playerArea.x + " + " + 80 + " > " + boss_bullet.x)
+        console.log("2 " + playerArea.y + " < " + boss_bullet.y+ " && " + playerArea.y + " + " + 110 + " > " + boss_bullet.y)
 
-        if (playerArea.x > boss_bullet.x && playerArea.x + playerArea.width < boss_bullet.x)
+        if (playerArea.x - 80 < boss_bullet.x && playerArea.x > boss_bullet.x)
         {
-            if(playerArea.y > boss_bullet.y && playerArea.y + playerArea.height < boss_bullet.y)
+            if(playerArea.y - 110 < boss_bullet.y && playerArea.y > boss_bullet.y)
             {
                 boss_bullet.destroy();
                 playerArea.health -= 50;

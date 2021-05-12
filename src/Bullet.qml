@@ -31,10 +31,9 @@ Rectangle {
         if (x > 640){
             destroy()
         }
-
         if (bullet.x > playerArea.bossX && bullet.x < playerArea.bossX + 68)
         {
-            if(bullet.y > playerArea.bossY)
+            if(bullet.y > playerArea.bossY && bullet.y < playerArea.bossY + 92)
             {
                 playerArea.bossHealth -= 50;
                 bullet.destroy()
