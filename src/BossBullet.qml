@@ -32,8 +32,6 @@ Rectangle {
         {
             destroy()
         }
-        console.log("1 " + playerArea.x + " < " + boss_bullet.x + " && " + playerArea.x + " + " + 80 + " > " + boss_bullet.x)
-        console.log("2 " + playerArea.y + " < " + boss_bullet.y+ " && " + playerArea.y + " + " + 110 + " > " + boss_bullet.y)
 
         if (playerArea.x - 80 < boss_bullet.x && playerArea.x > boss_bullet.x)
         {
