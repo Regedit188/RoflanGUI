@@ -14,6 +14,7 @@ Rectangle {
     onYChanged:
     {
         playerArea.bossY = boss.y
+        playerArea.bossX = boss.x
     }
 
     Timer
@@ -45,7 +46,7 @@ Rectangle {
             if(up)
             {
                 boss.y+=4;
-                if (boss.y < 375)
+                if (boss.y > 375)
                 {
                     root.y = 375
                     up = false;
@@ -54,7 +55,7 @@ Rectangle {
             else
             {
                 boss.y-=4;
-                if (root.y > 300)
+                if (root.y < 300)
                 {
                     root.y = 300
                     up = true;
@@ -68,7 +69,7 @@ Rectangle {
         playerArea.bossX = boss.x
         if (playerArea.x > boss.x && playerArea.x < boss.x + boss.width)
         {
-            if(playerArea.y > boss.y)
+            if(playerArea.y > boss.y && playerArea.y < boss.y + boss.width)
             {
                 playerArea.health -= 25;
             }

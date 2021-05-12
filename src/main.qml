@@ -111,6 +111,13 @@ Window {
             leftPadding: 20
             topPadding: 60
         }
+        Text {
+            id: bossHealthInfo
+            text: qsTr("Boss health: 100")
+            leftPadding: 20
+            topPadding: 70
+            visible: false
+        }
     }
 
     Timer{
@@ -281,7 +288,10 @@ Window {
             {
                 playerArea.bossDefeat = true
                 playerArea.score += 100
+                bossHealthInfo.visible = true
+
             }
+            bossHealthInfo.text = "Boss health: "+ playerArea.bossHealth;
         }
 
         onPlatformDirectionChanged:
@@ -322,6 +332,7 @@ Window {
                 enemy_timer.running = false;
                 playerArea.boss = true;
                 playBoss.play();
+                bossHealthInfo.visible = true;
                 var component = Qt.createComponent("qrc:/Boss.qml")
 
                 if (component.status === Component.Ready){
