@@ -10,6 +10,7 @@ Window {
     property var elementsList: []
     property var decorsList: []
     property var platformList: []
+    property var bossList
 
     id:root
     visible: true
@@ -209,6 +210,13 @@ Window {
         platformList.push(e)
     }
 
+    function createBoss(){
+        var component = Qt.createComponent("qrc:/Boss.qml")
+        bossList = component.createObject(root, {"x":playerArea.x+ 100 + playerArea.deltaX, "y":playerArea.y});
+
+
+    }
+
     function restart(){
             playMainTheme.play();
             playerArea.isAlive = true;
@@ -263,6 +271,27 @@ Window {
         }
     }
 
+    function newLVL(){
+        backgroundWinLose.z  = 0;
+        playerArea.bossDefeat = false;
+        playerArea.score += 100;
+        bossHealthInfo.visible = false
+        playerArea.bossHealth = 100;
+        clearPlatform();
+        //clearElements();
+        //clearEnemy();
+        //clearDecors();
+
+        backgroundTexture.source = "qrc:/textures/background/1/background3.png";
+        backgroundTexture2.source = "qrc:/textures/background/1/background3.png";
+        createDecors(520, 375);
+        createPlatform(100, 320);
+        createElement(283, 350);
+        createElement(293, 350);
+        enemy_timer.running = true;
+
+    }
+
     Player{
         id: playerArea
         x:300
@@ -289,8 +318,10 @@ Window {
             {
                 playerArea.bossDefeat = true
                 playerArea.score += 100
-                bossHealthInfo.visible = true
-
+                bossHealthInfo.visible = false
+                bossList.destroy();
+                playBoss.stop();
+                newLVL();
             }
             bossHealthInfo.text = "Boss health: "+ playerArea.bossHealth;
         }
@@ -329,24 +360,23 @@ Window {
 
         onScoreChanged:
         {
-            if(playerArea.score >= 200 && playerArea.boss == false){
+            if((playerArea.score >= 200 && playerArea.boss == false) || (playerArea.score >= 700 && playerArea.boss == false)){
                 enemy_timer.running = false;
                 playerArea.boss = true;
                 playBoss.play();
                 bossHealthInfo.visible = true;
-                var component = Qt.createComponent("qrc:/Boss.qml")
 
-                if (component.status === Component.Ready){
-                    component.createObject(root, {"x":playerArea.x+ 100 + playerArea.deltaX, "y":playerArea.y})
-                }
+                createBoss();
+                playerArea.bossDefeat = false
             }
-            else if(playerArea.bossDefeat == true)
+            else if(playerArea.bossDefeat == true && playerArea.score > 700)
             {
                 playerArea.isAlive = false;
                 playMainTheme.stop();
                 backgroundWinLose.source = "qrc:/Cowboy/win/win.png";
                 playWin.play();
                 backgroundWinLose.z  = 20;
+
                 playerArea.winFlag = true;
             }
 

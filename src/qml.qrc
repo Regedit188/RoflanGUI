@@ -10,5 +10,6 @@
         <file>Platform.qml</file>
         <file>Boss.qml</file>
         <file>BossBullet.qml</file>
+        <file>textures/background/background2.jpg</file>
     </qresource>
 </RCC>
