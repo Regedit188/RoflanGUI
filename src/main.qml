@@ -268,19 +268,20 @@ Window {
         x:300
         y:375
         z:10
-        property var health: 100;
-        property var score: 0;
-        property var isAlive: true;
-        property var direction: 700;
-        property var deltaX: 50;
-        property var bulletMirrored: false;
-        property var platformDirection: 0
-        property var winFlag: false
-        property var boss: false
-        property var bossDefeat: false
-        property var bossX:playerArea.x + 100 + playerArea.deltaX
-        property var bossY:playerArea.y
-        property var bossHealth: 100
+        property int level: 1;
+        property real health: 100;
+        property real score: 0;
+        property bool isAlive: true;
+        property real direction: 700;
+        property real deltaX: 50;
+        property bool bulletMirrored: false;
+        property real platformDirection: 0
+        property bool winFlag: false
+        property bool boss: false
+        property bool bossDefeat: false
+        property real bossX:playerArea.x + 100 + playerArea.deltaX
+        property real bossY:playerArea.y
+        property real bossHealth: 100
 
         onBossHealthChanged:
         {
@@ -306,21 +307,21 @@ Window {
                 }
             }
 
-            for (var i = 0; i < decorsList.length; i++)
+            for (i = 0; i < decorsList.length; i++)
             {
-                var en = decorsList[i];
+                en = decorsList[i];
                 en.x += playerArea.platformDirection;elementsList
             }
 
-            for (var i = 0; i < elementsList.length; i++)
+            for (i = 0; i < elementsList.length; i++)
             {
-                var en = elementsList[i];
+                en = elementsList[i];
                 en.x += playerArea.platformDirection;
             }
 
-            for (var i = 0; i < enemyList.length; i++)
+            for (i = 0; i < enemyList.length; i++)
             {
-                var en = enemyList[i];
+                en = enemyList[i];
                 en.x += playerArea.platformDirection;
             }
 
