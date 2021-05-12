@@ -15,6 +15,13 @@ Rectangle {
     {
         playerArea.bossY = boss.y
         playerArea.bossX = boss.x
+        if (playerArea.x > boss.x && playerArea.x < boss.x + boss.width)
+        {
+            if(playerArea.y > boss.y && playerArea.y < boss.y + boss.height)
+            {
+                playerArea.health -= 25;
+            }
+        }
     }
 
     Timer
@@ -43,38 +50,42 @@ Rectangle {
 
         onTriggered:
         {
+            console.log(boss.y)
+            if(boss.y < 50)
+            {
+                up = true;
+            }
+            else if(boss.y > 375)
+            {
+                up = false;
+            }
+
             if(up)
             {
+
                 boss.y+=4;
+                playerArea.bossY = boss.y
                 if (boss.y > 375)
                 {
-                    root.y = 375
+                    console.log("here1")
+                    boss.y = 375
                     up = false;
                 }
             }
             else
             {
+                playerArea.bossY = boss.y
                 boss.y-=4;
-                if (root.y < 300)
+                if (root.y < 50)
                 {
-                    root.y = 300
+                    console.log("here2")
+                    boss.y = 0
                     up = true;
                 }
             }
         }
     }
 
-    onXChanged:
-    {
-        playerArea.bossX = boss.x
-        if (playerArea.x > boss.x && playerArea.x < boss.x + boss.width)
-        {
-            if(playerArea.y > boss.y && playerArea.y < boss.y + boss.width)
-            {
-                playerArea.health -= 25;
-            }
-        }
-    }
 
     Image {
         id: bossTexture

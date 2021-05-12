@@ -278,8 +278,8 @@ Window {
         property var winFlag: false
         property var boss: false
         property var bossDefeat: false
-        property var bossX:playerArea.x+ 100 + playerArea.deltaX
-        property var bossY: playerArea.y
+        property var bossX:playerArea.x + 100 + playerArea.deltaX
+        property var bossY:playerArea.y
         property var bossHealth: 100
 
         onBossHealthChanged:
