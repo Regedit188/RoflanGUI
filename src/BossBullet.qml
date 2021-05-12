@@ -33,9 +33,9 @@ Rectangle {
             destroy()
         }
 
-        if (playerArea.x > boss_bullet.x && playerArea.x < boss_bullet.x + boss_bullet.width)
+        if (playerArea.x > boss_bullet.x && playerArea.x + playerArea.width < boss_bullet.x)
         {
-            if(playerArea.y > boss_bullet.y && playerArea.y < boss_bullet.y + boss_bullet.height)
+            if(playerArea.y > boss_bullet.y && playerArea.y + playerArea.height < boss_bullet.y)
             {
                 boss_bullet.destroy();
                 playerArea.health -= 50;
